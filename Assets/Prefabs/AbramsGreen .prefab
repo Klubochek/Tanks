@@ -1150,6 +1150,9 @@ MonoBehaviour:
   Room: {fileID: 0}
   tankTextNameAndHp: {fileID: 6317617556849076776}
   tankNetworkRoomManager: {fileID: 0}
+  joint: {fileID: 2645347740609734309}
+  nickname: Loading...
+  hp: 0
 --- !u!114 &-6758985117699325777
 MonoBehaviour:
   m_ObjectHideFlags: 0

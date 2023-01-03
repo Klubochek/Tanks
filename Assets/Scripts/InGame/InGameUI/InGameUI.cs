@@ -1,6 +1,5 @@
-using Mirror;
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class InGameUI : MonoBehaviour
 {
@@ -8,6 +7,8 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private GameObject backToLobbyButton;
     [SerializeField] private TankNetworkRoomManager Room;
     [SerializeField] private TankNetworkRoomPlayer _tankNetwork;
+    [SerializeField] private TextMeshProUGUI cdText;
+    [SerializeField] private TextMeshProUGUI shellCountText;
     public TankNetworkRoomPlayer tankNetwork
     {
         get { return _tankNetwork; }
@@ -17,9 +18,18 @@ public class InGameUI : MonoBehaviour
             UpDateUI();
         }
     }
+
     private void Start()
     {
         Room = FindObjectOfType<TankNetworkRoomManager>();
+    }
+    public void UpdateCDandShell(int count, bool hasCD)
+    {
+        shellCountText.text = "Shell Count:" + count.ToString();
+        if (hasCD)
+            cdText.text = $"<color=red> Reloading...</color>";
+        else
+            cdText.text = $"<color=green> Ready to fire</color>";
     }
     private void UpDateUI()
     {
@@ -30,7 +40,7 @@ public class InGameUI : MonoBehaviour
     }
     public void OnDisconnectButtonClick()
     {
-        Debug.Log("Disconneting..."); 
+        Debug.Log("Disconneting...");
         foreach (var player in Room.tankRoomPlayers)
         {
             if (player.isLocalPlayer)
@@ -55,7 +65,7 @@ public class InGameUI : MonoBehaviour
         inGameMemu.SetActive(true);
     }
     public void OnBackToLobbyButtonClick()
-    { 
+    {
         Room.ServerChangeScene(Room.RoomScene);
     }
 }

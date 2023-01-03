@@ -1,16 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
-using System;
-using UnityEngine.UIElements;
-using Unity.VisualScripting;
 
 public class Shell : MonoBehaviour
 {
     private ShellPool shellPool;
     public int TeamOwner;
     public Coroutine coroutine;
+    public bool hasCollision;
+
     private void Start()
     {
         shellPool = FindObjectOfType<ShellPool>();
@@ -21,40 +18,44 @@ public class Shell : MonoBehaviour
         if (collision.gameObject.CompareTag("Surface"))
         {
             Debug.Log("Colision with ground");
-            CmdDestroy(gameObject);
+            Destroy(gameObject);
 
         }
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !hasCollision)
         {
+            hasCollision = true;
             Debug.Log("Colision with player");
-            var tankStats=collision.gameObject.GetComponentInParent<TankStats>();
-            if (tankStats.hp > 0)
+            var tankStats = collision.gameObject.GetComponentInParent<TankStats>();
+            if (tankStats.hp > 0 && tankStats.Team != TeamOwner)
             {
-                tankStats.CmdDamage();
+                tankStats.Damage();
+
             }
-            else 
+            if (tankStats.hp == 0)
             {
+                tankStats.joint.connectedBody = null;
                 TankAnimation anim = collision.gameObject.transform.GetComponentInParent<TankAnimation>();
-                anim.PlayDestroyAnimation(); 
+                anim.PlayDestroyAnimation();
             }
-            CmdDestroy(gameObject);
+            Destroy(gameObject);
         }
     }
 
-    private void CmdDestroy(GameObject gameObject)
+
+    private void Destroy(GameObject gameObject)
     {
         StopCoroutine(coroutine);
         shellPool.shellPool.Add(gameObject);
-        gameObject.transform.rotation = new Quaternion(0, 0, 0,0);
+        gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         var rb = gameObject.GetComponent<Rigidbody>();
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-     
+
         gameObject.SetActive(false);
     }
     private IEnumerator AutoDestroy()
     {
         yield return new WaitForSeconds(5);
-        CmdDestroy(gameObject);
+        Destroy(gameObject);
     }
 }

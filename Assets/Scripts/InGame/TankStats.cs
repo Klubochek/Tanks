@@ -1,47 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Mirror;
 using TMPro;
-using System.Runtime.CompilerServices;
-using System;
+using UnityEngine;
 
 public class TankStats : NetworkBehaviour
 {
 
-    [SerializeField] public int Team { get; private set; }
+    [SerializeField] public int Team;
     [SerializeField] public int ShellCount = 50;
 
     [SerializeField] private TankNetworkRoomPlayer tankPlayer;
     [SerializeField] private TankNetworkRoomManager Room;
     [SerializeField] private TextMeshPro tankTextNameAndHp;
     [SerializeField] private TankNetworkRoomManager tankNetworkRoomManager;
-    [SerializeField] const int MAXHP = 3;
+    [SerializeField] public HingeJoint joint;
+
+    [SerializeField] public readonly int MAXHP = 3;
 
 
     [SyncVar(hook = nameof(HandleNicknameChanged))]
     public string nickname = "Loading...";
-
-
-
     [SyncVar(hook = nameof(HandleHPChanged))]
     public int hp = 0;
+
 
 
     public override void OnStartAuthority()
     {
         Room = FindObjectOfType<TankNetworkRoomManager>();
         tankPlayer = Room.tankRoomPlayers.Find(x => x.isLocalPlayer == true);
-        //CmdSetNicknameAndHp();
     }
-    [Command]
-    public void CmdSetNicknameAndHp(string name)
+    public void Damage()
     {
-        nickname = name;
-        hp = MAXHP;
+        CmdDamage();
     }
-    [Command]
-    public void CmdDamage() 
+    [Command(requiresAuthority = false)]
+    public void CmdDamage()
     {
         hp--;
     }
@@ -49,23 +42,8 @@ public class TankStats : NetworkBehaviour
     {
         Debug.Log("UpdateName");
         tankTextNameAndHp.text = nickname + "\tHP:" + hp;
-        //CmdUpdateTankNameAndHp();
-        //tankTextNameAndHp.text = nickname + "\tHP:" + hp;
     }
 
-    [Command]
-    public void CmdUpdateTankNameAndHp()
-    {
-        Debug.Log("CmdUpdateName"); 
-        tankTextNameAndHp.text = nickname + "\tHP:" + hp;
-        //RpcUpdateTankNameAndHp();
-    }
-    [ClientRpc]
-    private void RpcUpdateTankNameAndHp()
-    {
-        Debug.Log("RpcUpdateName");
-        tankTextNameAndHp.text = nickname + "\tHP:" + hp;
-    }
     public void DecreaseShellCount()
     {
         ShellCount--;

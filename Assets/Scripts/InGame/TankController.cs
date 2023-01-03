@@ -26,7 +26,16 @@ namespace Tanks.Input
                 return controls = new Controls();
             }
         }
-
+        [ClientCallback]
+        private void OnEnable()
+        {
+            TankControls.Enable();
+        }
+        [ClientCallback]
+        private void OnDisable()
+        {
+            TankControls.Disable();
+        }
         public override void OnStartAuthority()
         {
             Cursor.visible = false;
@@ -56,16 +65,7 @@ namespace Tanks.Input
             moveDirection = Vector2.zero;
         }
 
-        [ClientCallback]
-        private void OnEnable()
-        {
-            TankControls.Enable();
-        }
-        [ClientCallback]
-        private void OnDisable()
-        {
-            TankControls.Disable();
-        }
+        
         private void FixedUpdate()
         {
             if (!isOwned) { Debug.Log("NoAuth"); return; }

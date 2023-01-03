@@ -1,11 +1,6 @@
 using Mirror;
-using System;
 using System.Collections;
-using System.Linq;
-using Tanks.Input;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TowerController : NetworkBehaviour
 {
@@ -16,18 +11,20 @@ public class TowerController : NetworkBehaviour
     [SerializeField] private TankAudio tankAudio;
     [SerializeField] private ShellPool shellPool;
     [SerializeField] private TankStats tankStats;
-     
+    [SerializeField] private InGameUI inGameUI;
+
     [SerializeField] private float rotationSpeed;
     [SerializeField] private bool isShoting;
     [SerializeField] private int shotPower = 2000;
     [SerializeField] private float canonRotationSpeed = 0.05f;
     [SerializeField] private int maxCanonAngle = 20;
+    [SerializeField] private int cdTime = 5;
 
     [Client]
     private void Update()
     {
         if (!isOwned) { return; }
-        
+
         if (Input.GetMouseButton(0) && !isShoting)
         {
             StartCoroutine(ShotCD());
@@ -35,35 +32,46 @@ public class TowerController : NetworkBehaviour
             tankAudio.PlayTankShot();
 
         }
+    }
 
+
+    public override void OnStartAuthority()
+    {
+        inGameUI = FindObjectOfType<InGameUI>();
+        inGameUI.UpdateCDandShell(tankStats.ShellCount, false);
     }
     private IEnumerator ShotCD()
     {
-        
+        tankStats.DecreaseShellCount();
+        inGameUI.UpdateCDandShell(tankStats.ShellCount, true);
         isShoting = true;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(cdTime);
         isShoting = false;
+        inGameUI.UpdateCDandShell(tankStats.ShellCount, false);
     }
     [Command]
     private void CmdShot()
     {
-        if(tankStats.ShellCount>0)
-        RpcShot();
+        if (tankStats.ShellCount > 0)
+            RpcShot();
     }
-    
-    
+
+
     [ClientRpc]
     private void RpcShot()
     {
-        GameObject bullet = shellPool.shellPool.Find(x=>x.activeSelf==false);
+        GameObject bullet = shellPool.shellPool.Find(x => x.activeSelf == false);
         bullet.SetActive(true);
         bullet.transform.position = weapon.transform.position;
         bullet.transform.localRotation = weapon.transform.rotation;
         shellPool.shellPool.RemoveAt(0);
-        bullet.GetComponent<Shell>().TeamOwner = tankStats.Team;
+        var shell = bullet.GetComponent<Shell>();
+        shell.TeamOwner = tankStats.Team;
+        shell.hasCollision = false;
+
         bullet.GetComponent<Rigidbody>().AddRelativeForce(weapon.transform.forward * -shotPower, ForceMode.Impulse);
     }
-    
+
 
     public void RotateTower(Vector3 direction)
     {
@@ -71,10 +79,9 @@ public class TowerController : NetworkBehaviour
     }
     public void RotateWeapon(Vector3 direction)
     {
-        //Debug.Log(canon.transform.localEulerAngles.x - direction.x * canonRotationSpeed);
-        if(canon.transform.localEulerAngles.x+direction.x*canonRotationSpeed<maxCanonAngle)
+        if (canon.transform.localEulerAngles.x + direction.x * canonRotationSpeed < maxCanonAngle)
             canon.transform.localEulerAngles += direction * canonRotationSpeed;
-        if(canon.transform.localEulerAngles.x + direction.x * canonRotationSpeed > 360 - maxCanonAngle)
+        if (canon.transform.localEulerAngles.x + direction.x * canonRotationSpeed > 360 - maxCanonAngle)
             canon.transform.localEulerAngles += direction * canonRotationSpeed;
     }
 }

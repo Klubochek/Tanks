@@ -10,27 +10,14 @@ public class TankNetworkRoomManager : NetworkRoomManager
     [SerializeField] private List<GameObject> tankPrefabs;
     [SerializeField] private GameObject content;
 
-    //public override void OnStartServer()
-    //{
-    //    foreach (var tank in tankRoomPlayers)
-    //    {
-    //        spawnPrefabs.Add(tank.gameObject);
-    //    }
-
-    //}
-    //public override void OnStartClient()
-    //{
-    //    //if ( SceneManager.GetActiveScene().name==onlineScene )
-    //    foreach (var tank in tankPrefabs)
-    //    {
-    //        NetworkClient.RegisterPrefab(tank);
-    //    }
-    //}
+    #region ServerCallbacks
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
     {
         var tankPlayer = tankRoomPlayers.Find(x => x.connectionToClient == conn);
-        gamePlayer.GetComponent<TankStats>().hp = 3;
-        gamePlayer.GetComponent<TankStats>().nickname=tankPlayer.PlayerName;
+        var tankStats = gamePlayer.GetComponent<TankStats>();
+        tankStats.hp = tankStats.MAXHP;
+        tankStats.nickname=tankPlayer.PlayerName;
+        tankStats.Team = tankPlayer.Team;
         return true;
     }
 
@@ -63,6 +50,15 @@ public class TankNetworkRoomManager : NetworkRoomManager
         CurrentPlayerTanks.Add(TankPlayer);
         return TankPlayer;
     }
+    public override void OnClientSceneChanged()
+    {
+        base.OnClientSceneChanged();
+        foreach (var roomPlayer in tankRoomPlayers)
+        {
+            roomPlayer.SetupInGameUI();
+        }
+    }
+#endregion
     public void StartGame()
     {
         foreach (var player in tankRoomPlayers)
@@ -72,12 +68,5 @@ public class TankNetworkRoomManager : NetworkRoomManager
         }
         OnRoomServerPlayersReady();
     }
-    public override void OnClientSceneChanged()
-    {
-        base.OnClientSceneChanged();
-        foreach (var roomPlayer in tankRoomPlayers)
-        {
-            roomPlayer.SetupInGameUI();
-        }
-    }
+    
 }

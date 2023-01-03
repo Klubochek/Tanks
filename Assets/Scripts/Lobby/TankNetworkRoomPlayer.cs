@@ -1,5 +1,4 @@
 using Mirror;
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,7 +28,7 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     [SyncVar(hook = nameof(HandleTeamChanged))]
     public int Team = 0;
 
-    
+
 
     [SerializeField] private PlayerData playerData;
     [SerializeField] private GameObject content;
@@ -44,12 +43,11 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
             return room = NetworkManager.singleton as TankNetworkRoomManager;
         }
     }
+    #region Callbacks
     public override void OnStartAuthority()
     {
         CmdSetDisplayName(playerData.PlayerName);
     }
-
-
     public override void OnStartClient()
     {
         Room.tankRoomPlayers.Add(this);
@@ -58,53 +56,20 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     public override void OnStopClient()
     {
         Room.tankRoomPlayers.Remove(this);
-
         UpdateDisplay();
     }
-    [Command]
-    public void CmdSetTeam()
-    {
-        if (Team == maxTeamCount - 1) Team = 0;
-        else Team++;
-        UpdateDisplay();
-
-    }
-    [Command]
-    private void CmdSetDisplayName(string playerName)
-    {
-        PlayerName = playerName;
-    }
-    //public void ChangePlayerStatus()
-    //{
-    //    CmdReadyUp();
-    //}
+    #endregion
     public void StartGame()
     {
         if (IsLeader)
             CmdStartGame();
     }
-    [Command]
-    public void CmdReadyUp()
-    {
-        IsReady = !IsReady;
-        Debug.Log(IsReady);    
-    }
+
     public void Disconnect()
     {
         CmdDisconnect();
     }
-    [Command]
-    public void CmdDisconnect()
-    {
-        Room.StopClient();
-    }
-    [Command]
-    public void CmdStartGame()
-    {
-        if (Room.tankRoomPlayers[0].connectionToClient != connectionToClient) { return; }
 
-        Room.StartGame();
-    }
     private void UpdateDisplay()
     {
         if (!isOwned)
@@ -153,6 +118,7 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
             CmdBackToLobby();
         }
     }
+    #region Commands
     [Command]
     private void CmdBackToLobby()
     {
@@ -161,8 +127,41 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
         content = GameObject.FindGameObjectWithTag("Content");
         UpdateDisplay();
     }
+    [Command]
+    public void CmdSetTeam()
+    {
+        if (Team == maxTeamCount - 1) Team = 0;
+        else Team++;
+        UpdateDisplay();
+
+    }
+    [Command]
+    private void CmdSetDisplayName(string playerName)
+    {
+        PlayerName = playerName;
+    }
+    [Command]
+    public void CmdDisconnect()
+    {
+        Room.StopClient();
+    }
+    [Command]
+    public void CmdStartGame()
+    {
+        if (Room.tankRoomPlayers[0].connectionToClient != connectionToClient) { return; }
+
+        Room.StartGame();
+    }
+    [Command]
+    public void CmdReadyUp()
+    {
+        IsReady = !IsReady;
+        Debug.Log(IsReady);
+    }
+    #endregion
+
 
     public void HandleReadyStatusChanged(bool oldValue, bool newValue) => UpdateDisplay();
     public void HandleDisplayNameChanged(string oldValue, string newValue) => UpdateDisplay();
-    public void HandleTeamChanged(int oldValue,int newValue) => UpdateDisplay();
+    public void HandleTeamChanged(int oldValue, int newValue) => UpdateDisplay();
 }
