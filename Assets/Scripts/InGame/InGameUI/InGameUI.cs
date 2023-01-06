@@ -1,3 +1,4 @@
+using Mirror;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private TankNetworkRoomPlayer _tankNetwork;
     [SerializeField] private TextMeshProUGUI cdText;
     [SerializeField] private TextMeshProUGUI shellCountText;
+    [SerializeField] private TextMeshProUGUI endGameText;
     public TankNetworkRoomPlayer tankNetwork
     {
         get { return _tankNetwork; }
@@ -43,7 +45,7 @@ public class InGameUI : MonoBehaviour
         Debug.Log("Disconneting...");
         foreach (var player in Room.tankRoomPlayers)
         {
-            if (player.isLocalPlayer)
+            if (player.isOwned)
             {
                 if (player.IsLeader)
                 {
@@ -68,4 +70,15 @@ public class InGameUI : MonoBehaviour
     {
         Room.ServerChangeScene(Room.RoomScene);
     }
+    //public void EndGame(int team)
+    //{
+    //    if (team == 0)
+    //        endGameText.text = "Победила голубая команда";
+    //    if (team == 1)
+    //        endGameText.text = "Победила желтая команда";
+    //    if (team == 2)
+    //        endGameText.text = "Победила зеленая команда";
+    //    if (team == 3)
+    //        endGameText.text = "Победила коричневая команда";
+    //}
 }

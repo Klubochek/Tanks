@@ -79,6 +79,7 @@ public class LobbyUI : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("Disconnect");
                     player.CmdDisconnect();
                     break;
                 }

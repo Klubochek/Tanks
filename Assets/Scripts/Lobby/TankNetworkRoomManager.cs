@@ -1,6 +1,10 @@
+using Firebase.Database;
 using Mirror;
+using System;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class TankNetworkRoomManager : NetworkRoomManager
 {
@@ -9,15 +13,64 @@ public class TankNetworkRoomManager : NetworkRoomManager
     public List<GameObject> CurrentPlayerTanks = new List<GameObject>();
     [SerializeField] private List<GameObject> tankPrefabs;
     [SerializeField] private GameObject content;
+    public string ServerName;
+
+
+    //[SyncVar(hook = nameof(HandleDeathCountChanged))]
+    public int CountOfDeathPlayer = 0;
+
+    public List<int> teamPlayersCount = new List<int>() { 0, 0, 0, 0 };
+
+    public int lastBluePos = 0;
+    public int lastYellowPos = 0;
+    public int lastGreenPos = 0;
+    public int lastBrownPos = 0;
+
+    private DatabaseReference dbr;
+
 
     #region ServerCallbacks
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        dbr = FirebaseDatabase.DefaultInstance.RootReference;
+
+
+        string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
+        var externalIp = IPAddress.Parse(externalIpString);
+        Console.WriteLine("Current ip:" + externalIp);
+        ServerName = $"Server{UnityEngine.Random.Range(0, 10)}";
+
+        dbr.Child("Servers").Child(ServerName).Child("NameOfServer").SetValueAsync(ServerName);
+        dbr.Child("Servers").Child(ServerName).Child("Ip").SetValueAsync(externalIp.ToString());
+
+
+    }
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+        dbr.Child("Servers").Child(ServerName).RemoveValueAsync();
+    }
+
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
     {
+
         var tankPlayer = tankRoomPlayers.Find(x => x.connectionToClient == conn);
+
+        if (tankPlayer == null) System.Console.WriteLine(tankPlayer);
+
+
+
         var tankStats = gamePlayer.GetComponent<TankStats>();
+
         tankStats.hp = tankStats.MAXHP;
-        tankStats.nickname=tankPlayer.PlayerName;
+
+        tankStats.nickname = tankPlayer.PlayerName;
+
         tankStats.Team = tankPlayer.Team;
+
         return true;
     }
 
@@ -40,9 +93,41 @@ public class TankNetworkRoomManager : NetworkRoomManager
 
 
     }
+
+    public Transform ChooseStartPosition(int team)
+    {
+        ;
+        if (team == 0)
+        {
+            var position = startPositions[team * 5 + teamPlayersCount[team]];
+            teamPlayersCount[team]++;
+            return position;
+
+        }
+        if (team == 1)
+        {
+            var position = startPositions[team * 5 + teamPlayersCount[team]];
+            teamPlayersCount[team]++;
+            return position;
+        }
+        if (team == 2)
+        {
+            var position = startPositions[team * 5 + teamPlayersCount[team]];
+            teamPlayersCount[team]++;
+            return position;
+        }
+        if (team == 3)
+        {
+            var position = startPositions[team * 5 + teamPlayersCount[team]];
+            teamPlayersCount[team]++;
+            return position;
+        }
+        return null;
+    }
+
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
-        Transform startPos = GetStartPosition();
+        Transform startPos = ChooseStartPosition(roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team);
         Debug.Log("Team:" + roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team);
         playerPrefab = spawnPrefabs[roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team];
 
@@ -58,7 +143,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
             roomPlayer.SetupInGameUI();
         }
     }
-#endregion
+    #endregion
     public void StartGame()
     {
         foreach (var player in tankRoomPlayers)
@@ -68,5 +153,32 @@ public class TankNetworkRoomManager : NetworkRoomManager
         }
         OnRoomServerPlayersReady();
     }
-    
+    //[Command]
+    //public IEnumerator CmdEndGame()
+    //{
+    //    if (CountTeam() == 1)
+    //    {
+    //        RpcEndGame(teamPlayersCount.Find(x => x > 0));
+    //        yield return new WaitForSeconds(5);
+    //        NetworkServer.DisconnectAll();
+    //    }
+    //}
+
+    //private int CountTeam()
+    //{
+    //    int teamCount = 0;
+    //    for(int i=0; i < teamPlayersCount.Count; i++)
+    //    {
+    //        if (teamPlayersCount[i] > 0) teamCount++;
+    //    }
+    //    return teamCount;
+    //}
+
+    //[ClientRpc]
+    //public void RpcEndGame(int team)
+    //{
+    //    FindObjectOfType<InGameUI>().EndGame(team);
+    //}
+
+    //public void HandleDeathCountChanged(int oldValue, int newValue) => CmdEndGame();
 }

@@ -671,7 +671,7 @@ MonoBehaviour:
   syncInterval: 0.1
   rotationSpeed: 0.3
   speedForward: 10
-  speedBack: 3500
+  speedBack: 5000
   tankbody: {fileID: 7541005869024829822}
   tankAudio: {fileID: 3528660789890207825}
 --- !u!114 &436260546807968456
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4185952276786843085}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68c81cf5ce369a0479bc088fa279bda4, type: 3}
   m_Name: 
@@ -702,6 +702,7 @@ MonoBehaviour:
   shotPower: 100
   canonRotationSpeed: 0.1
   maxCanonAngle: 20
+  cdTime: 5
 --- !u!114 &203576374099045552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1101,7 +1102,6 @@ MonoBehaviour:
   virtualCamera: {fileID: 5617971260453992765}
   scopelCamera: {fileID: 250668948214925844}
   towerController: {fileID: 436260546807968456}
-  aim: {fileID: 0}
   aimBg: {fileID: 0}
   input:
     m_Name: Input
@@ -1146,7 +1146,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  Team: 0
   ShellCount: 50
   tankPlayer: {fileID: 0}
   Room: {fileID: 0}
@@ -1155,6 +1154,7 @@ MonoBehaviour:
   joint: {fileID: 2645347740609734309}
   nickname: Loading...
   hp: 0
+  Team: 0
 --- !u!114 &-6758985117699325777
 MonoBehaviour:
   m_ObjectHideFlags: 0

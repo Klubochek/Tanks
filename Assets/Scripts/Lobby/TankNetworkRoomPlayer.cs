@@ -51,11 +51,13 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     public override void OnStartClient()
     {
         Room.tankRoomPlayers.Add(this);
+        CmdSetTankPlayer();
         UpdateDisplay();
     }
     public override void OnStopClient()
     {
         Room.tankRoomPlayers.Remove(this);
+        CmdRemoveTankPlayer();
         UpdateDisplay();
     }
     #endregion
@@ -143,7 +145,8 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     [Command]
     public void CmdDisconnect()
     {
-        Room.StopClient();
+        Debug.Log("Disconnectiong");
+        connectionToClient.Disconnect();
     }
     [Command]
     public void CmdStartGame()
@@ -157,6 +160,17 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     {
         IsReady = !IsReady;
         Debug.Log(IsReady);
+    }
+    //ТЕстовые команды
+    [Command]
+    private void CmdSetTankPlayer()
+    {
+        Room.tankRoomPlayers.Add(this);
+    }
+    [Command]
+    private void CmdRemoveTankPlayer()
+    {
+        Room.tankRoomPlayers.Remove(this);
     }
     #endregion
 

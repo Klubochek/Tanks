@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -37,6 +38,7 @@ public class TowerController : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
+        enabled = true;
         inGameUI = FindObjectOfType<InGameUI>();
         inGameUI.UpdateCDandShell(tankStats.ShellCount, false);
     }
@@ -53,6 +55,7 @@ public class TowerController : NetworkBehaviour
     private void CmdShot()
     {
         if (tankStats.ShellCount > 0)
+            
             RpcShot();
     }
 

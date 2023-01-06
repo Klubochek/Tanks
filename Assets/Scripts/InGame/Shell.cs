@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class Shell : MonoBehaviour
     public Coroutine coroutine;
     public bool hasCollision;
 
-    private void Start()
+    private void OnEnable()
     {
         shellPool = FindObjectOfType<ShellPool>();
         coroutine = StartCoroutine(AutoDestroy());
@@ -18,7 +19,7 @@ public class Shell : MonoBehaviour
         if (collision.gameObject.CompareTag("Surface"))
         {
             Debug.Log("Colision with ground");
-            Destroy(gameObject);
+            DestroyShell(gameObject);
 
         }
         if (collision.gameObject.CompareTag("Player") && !hasCollision)
@@ -31,18 +32,20 @@ public class Shell : MonoBehaviour
                 tankStats.Damage();
 
             }
-            if (tankStats.hp == 0)
+            Console.WriteLine($"Current hp:{tankStats.hp}");
+            if (tankStats.hp == 1)
             {
                 tankStats.joint.connectedBody = null;
                 TankAnimation anim = collision.gameObject.transform.GetComponentInParent<TankAnimation>();
                 anim.PlayDestroyAnimation();
+                tankStats.CmdDeath();
             }
-            Destroy(gameObject);
+            DestroyShell(gameObject);
         }
     }
+    
 
-
-    private void Destroy(GameObject gameObject)
+    private void DestroyShell(GameObject gameObject)
     {
         StopCoroutine(coroutine);
         shellPool.shellPool.Add(gameObject);
@@ -56,6 +59,6 @@ public class Shell : MonoBehaviour
     private IEnumerator AutoDestroy()
     {
         yield return new WaitForSeconds(5);
-        Destroy(gameObject);
+        DestroyShell(gameObject);
     }
 }
