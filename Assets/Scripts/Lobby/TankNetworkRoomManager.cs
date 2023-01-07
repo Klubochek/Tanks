@@ -15,6 +15,8 @@ public class TankNetworkRoomManager : NetworkRoomManager
     [SerializeField] private GameObject content;
     public string ServerName;
 
+    [SerializeField] private TeamManager teamManager;
+
 
     //[SyncVar(hook = nameof(HandleDeathCountChanged))]
     public int CountOfDeathPlayer = 0;
@@ -26,7 +28,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
     public int lastGreenPos = 0;
     public int lastBrownPos = 0;
 
-    private DatabaseReference dbr;
+    //private DatabaseReference dbr;
 
 
     #region ServerCallbacks
@@ -35,7 +37,8 @@ public class TankNetworkRoomManager : NetworkRoomManager
     {
         base.OnStartServer();
 
-        dbr = FirebaseDatabase.DefaultInstance.RootReference;
+        //teamManager = FindObjectOfType<TeamManager>();
+        //dbr = FirebaseDatabase.DefaultInstance.RootReference;
 
 
         string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
@@ -43,15 +46,15 @@ public class TankNetworkRoomManager : NetworkRoomManager
         Console.WriteLine("Current ip:" + externalIp);
         ServerName = $"Server{UnityEngine.Random.Range(0, 10)}";
 
-        dbr.Child("Servers").Child(ServerName).Child("NameOfServer").SetValueAsync(ServerName);
-        dbr.Child("Servers").Child(ServerName).Child("Ip").SetValueAsync(externalIp.ToString());
+        //dbr.Child("Servers").Child(ServerName).Child("NameOfServer").SetValueAsync(ServerName);
+        //dbr.Child("Servers").Child(ServerName).Child("Ip").SetValueAsync(externalIp.ToString());
 
 
     }
     public override void OnStopServer()
     {
         base.OnStopServer();
-        dbr.Child("Servers").Child(ServerName).RemoveValueAsync();
+        //dbr.Child("Servers").Child(ServerName).RemoveValueAsync();
     }
 
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
@@ -70,6 +73,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
         tankStats.nickname = tankPlayer.PlayerName;
 
         tankStats.Team = tankPlayer.Team;
+        
 
         return true;
     }
@@ -127,12 +131,16 @@ public class TankNetworkRoomManager : NetworkRoomManager
 
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
-        Transform startPos = ChooseStartPosition(roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team);
-        Debug.Log("Team:" + roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team);
-        playerPrefab = spawnPrefabs[roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team];
+        var team = roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team;
+        Transform startPos = ChooseStartPosition(team);
+        Debug.Log("Team:" + team);
+        playerPrefab = spawnPrefabs[team];
 
         GameObject TankPlayer = Instantiate(playerPrefab, startPos.position, startPos.rotation);
         CurrentPlayerTanks.Add(TankPlayer);
+
+        if (teamManager == null) teamManager = FindObjectOfType<TeamManager>();
+        teamManager.AddTankToTeam(team);
         return TankPlayer;
     }
     public override void OnClientSceneChanged()
@@ -152,33 +160,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
             player.readyToBegin = true;
         }
         OnRoomServerPlayersReady();
+        
     }
-    //[Command]
-    //public IEnumerator CmdEndGame()
-    //{
-    //    if (CountTeam() == 1)
-    //    {
-    //        RpcEndGame(teamPlayersCount.Find(x => x > 0));
-    //        yield return new WaitForSeconds(5);
-    //        NetworkServer.DisconnectAll();
-    //    }
-    //}
-
-    //private int CountTeam()
-    //{
-    //    int teamCount = 0;
-    //    for(int i=0; i < teamPlayersCount.Count; i++)
-    //    {
-    //        if (teamPlayersCount[i] > 0) teamCount++;
-    //    }
-    //    return teamCount;
-    //}
-
-    //[ClientRpc]
-    //public void RpcEndGame(int team)
-    //{
-    //    FindObjectOfType<InGameUI>().EndGame(team);
-    //}
-
-    //public void HandleDeathCountChanged(int oldValue, int newValue) => CmdEndGame();
+    
 }

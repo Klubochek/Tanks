@@ -4030,6 +4030,7 @@ MonoBehaviour:
   - {fileID: 4185952276786843085, guid: abcc6f8c01dbaff4e86e3ec66c87b491, type: 3}
   content: {fileID: 0}
   ServerName: 
+  teamManager: {fileID: 0}
   CountOfDeathPlayer: 0
   teamPlayersCount: 00000000000000000000000000000000
   lastBluePos: 0

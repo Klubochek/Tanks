@@ -70,15 +70,15 @@ public class InGameUI : MonoBehaviour
     {
         Room.ServerChangeScene(Room.RoomScene);
     }
-    //public void EndGame(int team)
-    //{
-    //    if (team == 0)
-    //        endGameText.text = "Победила голубая команда";
-    //    if (team == 1)
-    //        endGameText.text = "Победила желтая команда";
-    //    if (team == 2)
-    //        endGameText.text = "Победила зеленая команда";
-    //    if (team == 3)
-    //        endGameText.text = "Победила коричневая команда";
-    //}
+    public void ShowWinner(int team)
+    {
+        if (team == 0)
+            endGameText.text = "Победила голубая команда";
+        if (team == 1)
+            endGameText.text = "Победила желтая команда";
+        if (team == 2)
+            endGameText.text = "Победила зеленая команда";
+        if (team == 3)
+            endGameText.text = "Победила коричневая команда";
+    }
 }

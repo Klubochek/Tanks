@@ -24,15 +24,27 @@ public class TankStats : NetworkBehaviour
     [SyncVar]
     public int Team;
 
+    [SerializeField] private TeamManager teamManager;
 
     public override void OnStartAuthority()
     {
+
+        
         Room = FindObjectOfType<TankNetworkRoomManager>();
         tankPlayer = Room.tankRoomPlayers.Find(x => x.isLocalPlayer == true);
+
+        //CmdAddPlayrToTeam();
+        
     }
+    
     public void Damage()
     {
         CmdDamage();
+    }
+    [Command]
+    public void CmdAddPlayrToTeam()
+    {
+        teamManager.AddTankToTeam(Team);
     }
     [Command]
     public void CmdDamage()
@@ -40,9 +52,16 @@ public class TankStats : NetworkBehaviour
         Console.WriteLine("Damage");
         hp--;
     }
+    public void Death()
+    {
+        CmdDeath();
+    }
     [Command]
     public void CmdDeath()
     {
+        teamManager = FindObjectOfType<TeamManager>();
+        teamManager.RemoveTankFromTeam(Team);
+        
         RpcDeath();
         //if (Team == 0)
         //{

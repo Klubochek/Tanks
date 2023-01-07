@@ -39,7 +39,7 @@ public class Shell : MonoBehaviour
                 tankStats.joint.connectedBody = null;
                 TankAnimation anim = collision.gameObject.transform.GetComponentInParent<TankAnimation>();
                 anim.PlayDestroyAnimation();
-                tankStats.CmdDeath();
+                tankStats.Death();
             }
             CmdDestroyShell(gameObject);
         }
