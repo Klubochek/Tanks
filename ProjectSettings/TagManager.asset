@@ -10,6 +10,7 @@ TagManager:
   - Aim
   - Aimbg
   - Surface
+  - Camera
   layers:
   - Default
   - TransparentFX

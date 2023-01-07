@@ -15,7 +15,7 @@ public class TankStats : NetworkBehaviour
     [SerializeField] public HingeJoint joint;
 
     [SerializeField] public readonly int MAXHP = 10;
-
+    [SerializeField] public bool isDead=false;
 
     [SyncVar(hook = nameof(HandleNicknameChanged))]
     public string nickname = "Loading...";
@@ -43,27 +43,35 @@ public class TankStats : NetworkBehaviour
     [Command]
     public void CmdDeath()
     {
-        if (Team == 0)
-        {
-            Room.CountOfDeathPlayer++;
-            Room.lastBluePos--;
-        }
-        if (Team == 1)
-        {
-            Room.CountOfDeathPlayer++;
-            Room.lastYellowPos--;
-        }
-        if (Team == 2)
-        {
-            Room.CountOfDeathPlayer++;
-            Room.lastGreenPos--;
-        }
-        if (Team == 3)
-        {
-            Room.CountOfDeathPlayer++;
-            Room.lastBrownPos--;
-        }
+        RpcDeath();
+        //if (Team == 0)
+        //{
+        //    Room.CountOfDeathPlayer++;
+        //    Room.lastBluePos--;
+        //}
+        //if (Team == 1)
+        //{
+        //    Room.CountOfDeathPlayer++;
+        //    Room.lastYellowPos--;
+        //}
+        //if (Team == 2)
+        //{
+        //    Room.CountOfDeathPlayer++;
+        //    Room.lastGreenPos--;
+        //}
+        //if (Team == 3)
+        //{
+        //    Room.CountOfDeathPlayer++;
+        //    Room.lastBrownPos--;
+        //}
     }
+
+    [ClientRpc]
+    private void RpcDeath()
+    {
+        isDead = true;
+    }
+
     public void UpdateTankNameAndHp()
     {
         Debug.Log("UpdateName");

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Mirror;
 
 public class Shell : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class Shell : MonoBehaviour
         if (collision.gameObject.CompareTag("Surface"))
         {
             Debug.Log("Colision with ground");
-            DestroyShell(gameObject);
+            CmdDestroyShell(gameObject);
 
         }
         if (collision.gameObject.CompareTag("Player") && !hasCollision)
@@ -40,15 +41,20 @@ public class Shell : MonoBehaviour
                 anim.PlayDestroyAnimation();
                 tankStats.CmdDeath();
             }
-            DestroyShell(gameObject);
+            CmdDestroyShell(gameObject);
         }
     }
-    
 
-    private void DestroyShell(GameObject gameObject)
+    //[Command]
+    public void CmdDestroyShell(GameObject gameObj)
+    {
+        RpcDestroyShell(gameObj);
+    }
+    //[ClientRpc]
+    private void RpcDestroyShell(GameObject gameObject)
     {
         StopCoroutine(coroutine);
-        shellPool.shellPool.Add(gameObject);
+        //shellPool.shellPool.Add(gameObject);
         gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         var rb = gameObject.GetComponent<Rigidbody>();
         rb.velocity = Vector3.zero;
@@ -59,6 +65,6 @@ public class Shell : MonoBehaviour
     private IEnumerator AutoDestroy()
     {
         yield return new WaitForSeconds(5);
-        DestroyShell(gameObject);
+        CmdDestroyShell(gameObject);
     }
 }

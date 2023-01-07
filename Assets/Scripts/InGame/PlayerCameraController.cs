@@ -1,5 +1,7 @@
 using Cinemachine;
 using Mirror;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +16,8 @@ namespace Tanks.Input
         [SerializeField] private CinemachineVirtualCamera scopelCamera;
         [SerializeField] private TowerController towerController;
         [SerializeField] private GameObject aimBg;
+        [SerializeField] private CameraManager cameraManager;
+        [SerializeField] private TankStats tankStats;
 
 
         private CinemachineTransposer transposer;
@@ -37,9 +41,15 @@ namespace Tanks.Input
         {
             TankControls.Disable();
         }
+
+        public override void OnStartClient()
+        {
+            cameraManager = FindObjectOfType<CameraManager>();
+            cameraManager.cameraObjs.Add(virtualCamera.gameObject);
+        }
         public override void OnStartAuthority()
         {
-
+            cameraManager = FindObjectOfType<CameraManager>();
             aimBg = GameObject.FindGameObjectWithTag("Aimbg");
             aimBg.SetActive(false);
             transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
@@ -47,10 +57,24 @@ namespace Tanks.Input
             enabled = true;
 
 
+
+
+
             TankControls.Player.Look.performed += ctx => Look(ctx.ReadValue<Vector2>());
             TankControls.Player.Scope.started += ctx => StartScope(true);
             TankControls.Player.Scope.canceled += ctx => StartScope(false); ;
+            TankControls.Player.SwitchCamera.performed += ctx => SwitchCamera();
 
+           
+            cameraManager.currentCamera = virtualCamera.gameObject;
+        }
+
+        private void SwitchCamera()
+        {
+            if (tankStats.isDead)
+            {
+                cameraManager.SwitchCamera();
+            }
         }
 
         private void StartScope(bool isScope)
@@ -74,7 +98,7 @@ namespace Tanks.Input
             if (transposer == null)
                 Debug.Log("Null transposer");
             if (virtualCamera == null) Debug.Log("Null camera");
-            if (transposer != null)
+            if (transposer != null && !tankStats.isDead)
             {
                 float deltaTime = Time.deltaTime;
                 float folloOffset = Mathf.Clamp(

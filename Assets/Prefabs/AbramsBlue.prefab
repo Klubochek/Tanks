@@ -510,9 +510,10 @@ GameObject:
   - component: {fileID: 3326425546043471882}
   - component: {fileID: 5617971260453992765}
   - component: {fileID: 5720864680257026266}
+  - component: {fileID: 8535553694938039958}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: Camera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,6 +602,18 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
+--- !u!114 &8535553694938039958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656352283750758257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8069848d470482f4f867717ca6fa3388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4185952276786843085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,6 +1116,8 @@ MonoBehaviour:
   scopelCamera: {fileID: 250668948214925844}
   towerController: {fileID: 436260546807968456}
   aimBg: {fileID: 0}
+  cameraManager: {fileID: 0}
+  tankStats: {fileID: 5057529935287757853}
   input:
     m_Name: Input
     m_Type: 0
@@ -1152,6 +1167,7 @@ MonoBehaviour:
   tankTextNameAndHp: {fileID: 6317617556849076776}
   tankNetworkRoomManager: {fileID: 0}
   joint: {fileID: 2645347740609734309}
+  isDead: 0
   nickname: Loading...
   hp: 0
   Team: 0

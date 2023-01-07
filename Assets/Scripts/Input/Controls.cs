@@ -82,6 +82,15 @@ namespace Tanks.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8a43827-7bde-40ce-9dcb-9123684f339d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -194,6 +203,17 @@ namespace Tanks.Input
                     ""action"": ""LockCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7836feb3-c7fa-4350-9c6d-76a57f387b74"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&mouse"",
+                    ""action"": ""SwitchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -225,6 +245,7 @@ namespace Tanks.Input
             m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
             m_Player_Cursor = m_Player.FindAction("Cursor", throwIfNotFound: true);
             m_Player_LockCamera = m_Player.FindAction("LockCamera", throwIfNotFound: true);
+            m_Player_SwitchCamera = m_Player.FindAction("SwitchCamera", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -290,6 +311,7 @@ namespace Tanks.Input
         private readonly InputAction m_Player_Scope;
         private readonly InputAction m_Player_Cursor;
         private readonly InputAction m_Player_LockCamera;
+        private readonly InputAction m_Player_SwitchCamera;
         public struct PlayerActions
         {
             private @Controls m_Wrapper;
@@ -300,6 +322,7 @@ namespace Tanks.Input
             public InputAction @Scope => m_Wrapper.m_Player_Scope;
             public InputAction @Cursor => m_Wrapper.m_Player_Cursor;
             public InputAction @LockCamera => m_Wrapper.m_Player_LockCamera;
+            public InputAction @SwitchCamera => m_Wrapper.m_Player_SwitchCamera;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -327,6 +350,9 @@ namespace Tanks.Input
                     @LockCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockCamera;
                     @LockCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockCamera;
                     @LockCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockCamera;
+                    @SwitchCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
+                    @SwitchCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
+                    @SwitchCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -349,6 +375,9 @@ namespace Tanks.Input
                     @LockCamera.started += instance.OnLockCamera;
                     @LockCamera.performed += instance.OnLockCamera;
                     @LockCamera.canceled += instance.OnLockCamera;
+                    @SwitchCamera.started += instance.OnSwitchCamera;
+                    @SwitchCamera.performed += instance.OnSwitchCamera;
+                    @SwitchCamera.canceled += instance.OnSwitchCamera;
                 }
             }
         }
@@ -370,6 +399,7 @@ namespace Tanks.Input
             void OnScope(InputAction.CallbackContext context);
             void OnCursor(InputAction.CallbackContext context);
             void OnLockCamera(InputAction.CallbackContext context);
+            void OnSwitchCamera(InputAction.CallbackContext context);
         }
     }
 }

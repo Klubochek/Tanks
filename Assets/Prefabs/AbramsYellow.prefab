@@ -1103,6 +1103,8 @@ MonoBehaviour:
   scopelCamera: {fileID: 250668948214925844}
   towerController: {fileID: 436260546807968456}
   aimBg: {fileID: 0}
+  cameraManager: {fileID: 0}
+  tankStats: {fileID: 5057529935287757853}
   input:
     m_Name: Input
     m_Type: 0
@@ -1152,6 +1154,7 @@ MonoBehaviour:
   tankTextNameAndHp: {fileID: 6317617556849076776}
   tankNetworkRoomManager: {fileID: 0}
   joint: {fileID: 2645347740609734309}
+  isDead: 0
   nickname: Loading...
   hp: 0
   Team: 0

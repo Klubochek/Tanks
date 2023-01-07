@@ -67,7 +67,7 @@ public class TowerController : NetworkBehaviour
         bullet.SetActive(true);
         bullet.transform.position = weapon.transform.position;
         bullet.transform.localRotation = weapon.transform.rotation;
-        shellPool.shellPool.RemoveAt(0);
+        //shellPool.shellPool.RemoveAt(0);
         var shell = bullet.GetComponent<Shell>();
         shell.TeamOwner = tankStats.Team;
         shell.hasCollision = false;

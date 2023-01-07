@@ -3995,7 +3995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
   runInBackground: 1
-  autoStartServerBuild: 0
+  autoStartServerBuild: 1
   autoConnectClientBuild: 0
   sendRate: 60
   offlineScene: Assets/Scenes/MainMenu.unity
@@ -4013,7 +4013,7 @@ MonoBehaviour:
   - {fileID: 4185952276786843085, guid: bc4843114f848674385f5b81c69a69cb, type: 3}
   - {fileID: 4185952276786843085, guid: 6dd36f034eff7a0489647e2796cba01a, type: 3}
   timeInterpolationGui: 0
-  showRoomGUI: 1
+  showRoomGUI: 0
   minPlayers: 2
   roomPlayerPrefab: {fileID: -6214677855339641522, guid: 5b2a77bb94b5fce40a1dabd1f5bb3163, type: 3}
   RoomScene: Assets/Scenes/LobbyScene.unity
@@ -4257,7 +4257,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 463999971}
         m_TargetAssemblyTypeName: MainMenuButton, Assembly-CSharp
-        m_MethodName: OnCloseConnectionMenuButtonClick
+        m_MethodName: OnRefreshButtonCLick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

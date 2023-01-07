@@ -59,13 +59,24 @@ public class MainMenuButton : MonoBehaviour
     }
     public void OnCloseConnectionMenuButtonClick()
     {
+        DestroyServerBars();
+        connectionMenu.SetActive(false);
+    }
+    public void OnRefreshButtonCLick()
+    {
+        DestroyServerBars();
+        StartCoroutine(Join());
+
+    }
+    public void DestroyServerBars()
+    {
         foreach (var server in serversList)
         {
             Destroy(server);
         }
         serversList.Clear();
-        connectionMenu.SetActive(false);
     }
+
     public void OnHostButtonClick()
     {
         connector.Host();
