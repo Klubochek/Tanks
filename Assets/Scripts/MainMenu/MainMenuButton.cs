@@ -1,9 +1,12 @@
+using Firebase.Database;
+using MongoDB.Bson;
+using Realms;
+using Realms.Sync;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
-using Firebase.Database;
-using System.Linq;
 
 public class MainMenuButton : MonoBehaviour
 {
@@ -17,41 +20,84 @@ public class MainMenuButton : MonoBehaviour
     private DatabaseReference dbr;
 
     [SerializeField] private List<GameObject> serversList;
+    private App app;
+    private string myAppId = "tanks-oyghl";
+    private Realm realm;
+    private User user;
+
 
     private void Start()
     {
+        StartMongoAuth();
+
+
         Cursor.visible = true;
-        currentUserName.text ="Current User:"+"\n"+playerData.PlayerName;
+        currentUserName.text = "Current User:" + "\n" + playerData.PlayerName;
         dbr = FirebaseDatabase.DefaultInstance.RootReference;
     }
+    public async void StartMongoAuth()
+    {
+        app = App.Create(new AppConfiguration(myAppId));
+        user = await app.LogInAsync(Credentials.Anonymous());
+
+        var config = new PartitionSyncConfiguration(user.Id,user);
+
+        // The process will complete when all the user's items have been downloaded.
+        realm = await Realm.GetInstanceAsync(config);
+    }
+
+
     public void OnJoinButtonClick()
     {
         StartCoroutine(Join());
     }
     public IEnumerator Join()
     {
-        connectionMenu.SetActive(true);
-        var servers = dbr.Child("Servers").GetValueAsync() ;
-        yield return new WaitUntil(() => servers.IsCompleted);
-        if (servers == null)
-        {
-            Debug.Log("NullServerData");
-        }
-        else if (servers.Result.Value == null)
-        {
-            Debug.Log("Empty db");
-        }
-        else
-        {
-            DataSnapshot ds = servers.Result;
-            foreach (DataSnapshot dataSnapshot in ds.Children.Reverse())
-            {
-                GameObject serverBar = Instantiate(serverPrefab, content.transform);
-                serversList.Add(serverBar);
+        var tesetserver = new ServersCollection { IP = "ipaddress", ServerName = "serever2" };
 
-                serverBar.GetComponent<ServerBar>().SetupServerParams(dataSnapshot.Child("NameOfServer").Value.ToString(), dataSnapshot.Child("Ip").Value.ToString());
-            }
+        realm.Write(() => realm.Add(tesetserver));
+
+        connectionMenu.SetActive(true);
+        var allServers = realm.All<ServersCollection>();
+        //Debug.Log(allServers[0].IP);
+        
+        
+       
+        yield return new WaitForSeconds(3);
+        if (allServers == null)
+        {
+            Debug.Log("Null data");
+            yield break;
         }
+        foreach (var server in allServers)
+        {
+            GameObject serverBar = Instantiate(serverPrefab, content.transform);
+            serversList.Add(serverBar);
+
+            serverBar.GetComponent<ServerBar>().SetupServerParams(server.ServerName, server.IP);
+        }
+
+        //var servers = dbr.Child("Servers").GetValueAsync() ;
+        //yield return new WaitUntil(() => servers.IsCompleted);
+        //if (servers == null)
+        //{
+        //    Debug.Log("NullServerData");
+        //}
+        //else if (servers.Result.Value == null)
+        //{
+        //    Debug.Log("Empty db");
+        //}
+        //else
+        //{
+        //    DataSnapshot ds = servers.Result;
+        //    foreach (DataSnapshot dataSnapshot in ds.Children.Reverse())
+        //    {
+        //        GameObject serverBar = Instantiate(serverPrefab, content.transform);
+        //        serversList.Add(serverBar);
+
+        //        serverBar.GetComponent<ServerBar>().SetupServerParams(dataSnapshot.Child("NameOfServer").Value.ToString(), dataSnapshot.Child("Ip").Value.ToString());
+        //    }
+        //}
     }
     public void OnConnectionWithOwnIpClick()
     {
