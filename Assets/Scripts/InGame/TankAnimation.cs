@@ -15,7 +15,6 @@ public class TankAnimation : NetworkBehaviour
     {
         tankController.enabled = false;
         towerController.enabled = false;
-        //playerCamera.enabled = false;
         
 
         CmdPlayDeathAnimation();

@@ -1,10 +1,9 @@
-using Firebase.Database;
-using MongoDB.Bson;
 using Realms;
 using Realms.Sync;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -17,14 +16,17 @@ public class MainMenuButton : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private GameObject serverPrefab;
     [SerializeField] private GameObject content;
-    private DatabaseReference dbr;
 
     [SerializeField] private List<GameObject> serversList;
+
+
+    
     private App app;
-    private string myAppId = "tanks-oyghl";
+    private string myAppId = "tanksapp-aeebe";
     private Realm realm;
     private User user;
-
+    private string userApiKey = "3ajKNzxo4JTjscK850iegKyaVJKj8YhjFfGUVRCwUCf4MW4XP7hqQmO2qc0cuzxZ";
+    private IQueryable<TankServer> allServers;
 
     private void Start()
     {
@@ -33,16 +35,15 @@ public class MainMenuButton : MonoBehaviour
 
         Cursor.visible = true;
         currentUserName.text = "Current User:" + "\n" + playerData.PlayerName;
-        dbr = FirebaseDatabase.DefaultInstance.RootReference;
     }
     public async void StartMongoAuth()
     {
         app = App.Create(new AppConfiguration(myAppId));
-        user = await app.LogInAsync(Credentials.Anonymous());
 
-        var config = new PartitionSyncConfiguration(user.Id,user);
+        user = await app.LogInAsync(Credentials.ApiKey(userApiKey));
 
-        // The process will complete when all the user's items have been downloaded.
+        var config = new PartitionSyncConfiguration(user.Id, user);
+
         realm = await Realm.GetInstanceAsync(config);
     }
 
@@ -53,17 +54,14 @@ public class MainMenuButton : MonoBehaviour
     }
     public IEnumerator Join()
     {
-        var tesetserver = new ServersCollection { IP = "ipaddress", ServerName = "serever2" };
-
-        realm.Write(() => realm.Add(tesetserver));
-
         connectionMenu.SetActive(true);
-        var allServers = realm.All<ServersCollection>();
-        //Debug.Log(allServers[0].IP);
         
+           allServers=realm.All<TankServer>(); 
         
-       
-        yield return new WaitForSeconds(3);
+
+
+
+        yield return new WaitUntil(()=>allServers!=null);
         if (allServers == null)
         {
             Debug.Log("Null data");
@@ -76,28 +74,6 @@ public class MainMenuButton : MonoBehaviour
 
             serverBar.GetComponent<ServerBar>().SetupServerParams(server.ServerName, server.IP);
         }
-
-        //var servers = dbr.Child("Servers").GetValueAsync() ;
-        //yield return new WaitUntil(() => servers.IsCompleted);
-        //if (servers == null)
-        //{
-        //    Debug.Log("NullServerData");
-        //}
-        //else if (servers.Result.Value == null)
-        //{
-        //    Debug.Log("Empty db");
-        //}
-        //else
-        //{
-        //    DataSnapshot ds = servers.Result;
-        //    foreach (DataSnapshot dataSnapshot in ds.Children.Reverse())
-        //    {
-        //        GameObject serverBar = Instantiate(serverPrefab, content.transform);
-        //        serversList.Add(serverBar);
-
-        //        serverBar.GetComponent<ServerBar>().SetupServerParams(dataSnapshot.Child("NameOfServer").Value.ToString(), dataSnapshot.Child("Ip").Value.ToString());
-        //    }
-        //}
     }
     public void OnConnectionWithOwnIpClick()
     {
@@ -111,6 +87,7 @@ public class MainMenuButton : MonoBehaviour
     public void OnRefreshButtonCLick()
     {
         DestroyServerBars();
+
         StartCoroutine(Join());
 
     }

@@ -1,10 +1,10 @@
-using Firebase.Database;
 using Mirror;
+using Realms;
+using Realms.Sync;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class TankNetworkRoomManager : NetworkRoomManager
 {
@@ -13,22 +13,22 @@ public class TankNetworkRoomManager : NetworkRoomManager
     public List<GameObject> CurrentPlayerTanks = new List<GameObject>();
     [SerializeField] private List<GameObject> tankPrefabs;
     [SerializeField] private GameObject content;
-    public string ServerName;
+    
 
     [SerializeField] private TeamManager teamManager;
 
-
-    //[SyncVar(hook = nameof(HandleDeathCountChanged))]
     public int CountOfDeathPlayer = 0;
 
     public List<int> teamPlayersCount = new List<int>() { 0, 0, 0, 0 };
 
-    public int lastBluePos = 0;
-    public int lastYellowPos = 0;
-    public int lastGreenPos = 0;
-    public int lastBrownPos = 0;
 
-    //private DatabaseReference dbr;
+    private App app;
+    private string myAppId = "tanksapp-aeebe";
+    private string serverApiKey = "3ajKNzxo4JTjscK850iegKyaVJKj8YhjFfGUVRCwUCf4MW4XP7hqQmO2qc0cuzxZ";
+    private Realm realm;
+    private User user;
+    private TankServer tankServer;
+    public string NewServerName;
 
 
     #region ServerCallbacks
@@ -36,25 +36,34 @@ public class TankNetworkRoomManager : NetworkRoomManager
     public override void OnStartServer()
     {
         base.OnStartServer();
-
-        //teamManager = FindObjectOfType<TeamManager>();
-        //dbr = FirebaseDatabase.DefaultInstance.RootReference;
+        StartMongoAuth();
 
 
+
+    }
+    public void SetNewServerData()
+    {
         string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
         var externalIp = IPAddress.Parse(externalIpString);
         Console.WriteLine("Current ip:" + externalIp);
-        ServerName = $"Server{UnityEngine.Random.Range(0, 10)}";
+        
+        NewServerName = $"Server{UnityEngine.Random.Range(0, 10)}";
+        tankServer = new TankServer { IP = externalIp.ToString(), ServerName = NewServerName };
+        realm.Write(() => realm.Add(tankServer));
+    }
+    public async void StartMongoAuth()
+    {
+        app = App.Create(new AppConfiguration(myAppId));
+        user = await app.LogInAsync(Credentials.ApiKey(serverApiKey));
+        var config = new PartitionSyncConfiguration(user.Id, user);
+        realm = await Realm.GetInstanceAsync(config);
 
-        //dbr.Child("Servers").Child(ServerName).Child("NameOfServer").SetValueAsync(ServerName);
-        //dbr.Child("Servers").Child(ServerName).Child("Ip").SetValueAsync(externalIp.ToString());
-
-
+        SetNewServerData();
     }
     public override void OnStopServer()
     {
         base.OnStopServer();
-        //dbr.Child("Servers").Child(ServerName).RemoveValueAsync();
+        realm.Write(() => realm.Remove(tankServer));
     }
 
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
@@ -73,7 +82,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
         tankStats.nickname = tankPlayer.PlayerName;
 
         tankStats.Team = tankPlayer.Team;
-        
+
 
         return true;
     }
@@ -160,7 +169,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
             player.readyToBegin = true;
         }
         OnRoomServerPlayersReady();
-        
+
     }
-    
+
 }
