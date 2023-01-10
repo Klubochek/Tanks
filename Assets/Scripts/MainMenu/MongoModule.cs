@@ -16,7 +16,7 @@ public class MongoModule
     private Realm realm;
     private User user;
     private string userApiKey = "G2sZdejhcpl7SOvOeMztZFaQ7vsJYVX2GYZVm4zcVXEdIPtZHGaLrua39HniYJZn";
-
+    private string ServerApiKey = "k4gi2xSNH9K0j1puksZBjuHOukrlaLIdkJsSB6pgaT3zjS9qix6TCeu7Ngn524cU";
     //For server data
     private TankServer tankServer;
     private string NewServerName;
@@ -25,11 +25,20 @@ public class MongoModule
     {
 
         app = App.Create(new AppConfiguration(myAppId));
-        user = await app.LogInAsync(Credentials.ApiKey(userApiKey));
+        user = await app.LogInAsync(Credentials.Anonymous(false));
 
-        var config = new PartitionSyncConfiguration(user.Id, user);
+        var config = new FlexibleSyncConfiguration(user)
+        {
+            PopulateInitialSubscriptions = (realm) =>
+            {
+                var myItems = realm.All<TankServer>();
+                realm.Subscriptions.Add(myItems);
+            }
+        };
 
         realm = await Realm.GetInstanceAsync(config);
+
+
         if (isServer) SetNewServerData();
 
     }
