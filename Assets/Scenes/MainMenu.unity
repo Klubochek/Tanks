@@ -294,6 +294,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 132190396}
   m_CullTransparentMesh: 1
+--- !u!1 &224121008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224121009}
+  - component: {fileID: 224121010}
+  m_Layer: 0
+  m_Name: ServerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &224121009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224121008}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.644227, y: 2.0262008, z: -5.446024}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &224121010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224121008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01add07a2eab093488c7e22a3df0f345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serversList: []
+  serverPrefab: {fileID: 2195974824465053326, guid: 2c7f2e75dd14af24dad719ef6b45d481, type: 3}
+  content: {fileID: 473622094}
 --- !u!1 &234168233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,9 +1494,7 @@ MonoBehaviour:
   ip: {fileID: 928079082}
   currentUserName: {fileID: 532916510}
   playerData: {fileID: 11400000, guid: 205ef2cb853c4764281ddd23278b8f3c, type: 2}
-  serverPrefab: {fileID: 2195974824465053326, guid: 2c7f2e75dd14af24dad719ef6b45d481, type: 3}
-  content: {fileID: 473622094}
-  serversList: []
+  serversModule: {fileID: 224121010}
 --- !u!1 &473622094
 GameObject:
   m_ObjectHideFlags: 0
@@ -3995,7 +4040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
   runInBackground: 1
-  autoStartServerBuild: 1
+  autoStartServerBuild: 0
   autoConnectClientBuild: 0
   sendRate: 60
   offlineScene: Assets/Scenes/MainMenu.unity
@@ -4029,14 +4074,7 @@ MonoBehaviour:
   - {fileID: 4185952276786843085, guid: 27f1317aa5f771c409bceddf8f7f0d89, type: 3}
   - {fileID: 4185952276786843085, guid: abcc6f8c01dbaff4e86e3ec66c87b491, type: 3}
   content: {fileID: 0}
-  ServerName: 
   teamManager: {fileID: 0}
-  CountOfDeathPlayer: 0
-  teamPlayersCount: 00000000000000000000000000000000
-  lastBluePos: 0
-  lastYellowPos: 0
-  lastGreenPos: 0
-  lastBrownPos: 0
 --- !u!1 &1402754902
 GameObject:
   m_ObjectHideFlags: 0

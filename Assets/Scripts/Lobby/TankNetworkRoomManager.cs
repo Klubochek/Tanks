@@ -1,9 +1,5 @@
 using Mirror;
-using Realms;
-using Realms.Sync;
-using System;
 using System.Collections.Generic;
-using System.Net;
 using UnityEngine;
 
 public class TankNetworkRoomManager : NetworkRoomManager
@@ -13,57 +9,26 @@ public class TankNetworkRoomManager : NetworkRoomManager
     public List<GameObject> CurrentPlayerTanks = new List<GameObject>();
     [SerializeField] private List<GameObject> tankPrefabs;
     [SerializeField] private GameObject content;
-    
+
 
     [SerializeField] private TeamManager teamManager;
 
-    public int CountOfDeathPlayer = 0;
-
-    public List<int> teamPlayersCount = new List<int>() { 0, 0, 0, 0 };
 
 
-    private App app;
-    private string myAppId = "tanksapp-aeebe";
-    private string serverApiKey = "3ajKNzxo4JTjscK850iegKyaVJKj8YhjFfGUVRCwUCf4MW4XP7hqQmO2qc0cuzxZ";
-    private Realm realm;
-    private User user;
-    private TankServer tankServer;
-    public string NewServerName;
 
+    private MongoModule mongoModule;
 
     #region ServerCallbacks
 
     public override void OnStartServer()
     {
         base.OnStartServer();
-        StartMongoAuth();
-
-
-
-    }
-    public void SetNewServerData()
-    {
-        string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
-        var externalIp = IPAddress.Parse(externalIpString);
-        Console.WriteLine("Current ip:" + externalIp);
-        
-        NewServerName = $"Server{UnityEngine.Random.Range(0, 10)}";
-        tankServer = new TankServer { IP = externalIp.ToString(), ServerName = NewServerName };
-        realm.Write(() => realm.Add(tankServer));
-    }
-    public async void StartMongoAuth()
-    {
-        app = App.Create(new AppConfiguration(myAppId));
-        user = await app.LogInAsync(Credentials.ApiKey(serverApiKey));
-        var config = new PartitionSyncConfiguration(user.Id, user);
-        realm = await Realm.GetInstanceAsync(config);
-
-        SetNewServerData();
+        mongoModule = new MongoModule(true);
     }
     public override void OnStopServer()
     {
         base.OnStopServer();
-        realm.Write(() => realm.Remove(tankServer));
+        mongoModule.DeleteServerData();
     }
 
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
@@ -109,7 +74,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
 
     public Transform ChooseStartPosition(int team)
     {
-        ;
+        var teamPlayersCount = teamManager.CurrentTeams;
         if (team == 0)
         {
             var position = startPositions[team * 5 + teamPlayersCount[team]];
@@ -140,6 +105,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
 
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
+        if (teamManager == null) teamManager = FindObjectOfType<TeamManager>();
         var team = roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team;
         Transform startPos = ChooseStartPosition(team);
         Debug.Log("Team:" + team);
@@ -148,7 +114,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
         GameObject TankPlayer = Instantiate(playerPrefab, startPos.position, startPos.rotation);
         CurrentPlayerTanks.Add(TankPlayer);
 
-        if (teamManager == null) teamManager = FindObjectOfType<TeamManager>();
+        
         teamManager.AddTankToTeam(team);
         return TankPlayer;
     }

@@ -207,8 +207,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 374643483}
-        m_TargetAssemblyTypeName: RegistationAndLogin, Assembly-CSharp
+      - m_Target: {fileID: 148108555}
+        m_TargetAssemblyTypeName: LoginMenuUI, Assembly-CSharp
         m_MethodName: OnBackButtonClick
         m_Mode: 1
         m_Arguments:
@@ -568,6 +568,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98897744}
   m_CullTransparentMesh: 1
+--- !u!1 &148108551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 148108552}
+  - component: {fileID: 148108555}
+  m_Layer: 0
+  m_Name: LoginManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &148108552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148108551}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.644227, y: 2.0262008, z: -5.446024}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &148108555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148108551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a9b3a7f09ff46c439ffc2d0136203e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emailField: {fileID: 1408353690}
+  passField: {fileID: 98897746}
+  logStatusText: {fileID: 1613339460}
+  regEmailField: {fileID: 1569351483}
+  regNickField: {fileID: 435118441}
+  regPass: {fileID: 819240098}
+  regConfirmPass: {fileID: 294441272}
+  regStatusText: {fileID: 321842104}
+  regMenu: {fileID: 1705272911}
+  logMenu: {fileID: 1639067667}
+  playerData: {fileID: 11400000, guid: 205ef2cb853c4764281ddd23278b8f3c, type: 2}
 --- !u!1 &200980817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,7 +1418,6 @@ GameObject:
   - component: {fileID: 374643480}
   - component: {fileID: 374643482}
   - component: {fileID: 374643481}
-  - component: {fileID: 374643483}
   m_Layer: 5
   m_Name: BackGround
   m_TagString: Untagged
@@ -1431,29 +1485,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374643479}
   m_CullTransparentMesh: 1
---- !u!114 &374643483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 374643479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf5c08fc5cfea024c8781bb22e367f59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emailField: {fileID: 1408353690}
-  passField: {fileID: 98897746}
-  logStatusText: {fileID: 1613339460}
-  regEmailField: {fileID: 1569351483}
-  regNickField: {fileID: 435118441}
-  regPass: {fileID: 819240098}
-  regConfirmPass: {fileID: 294441272}
-  regStatusText: {fileID: 321842104}
-  regMenu: {fileID: 1705272911}
-  logMenu: {fileID: 1639067667}
-  playerData: {fileID: 11400000, guid: 205ef2cb853c4764281ddd23278b8f3c, type: 2}
 --- !u!1 &416505201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,8 +1725,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 374643483}
-        m_TargetAssemblyTypeName: RegistationAndLogin, Assembly-CSharp
+      - m_Target: {fileID: 148108555}
+        m_TargetAssemblyTypeName: LoginMenuUI, Assembly-CSharp
         m_MethodName: OnSignUpButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4442,8 +4473,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 374643483}
-        m_TargetAssemblyTypeName: RegistationAndLogin, Assembly-CSharp
+      - m_Target: {fileID: 148108555}
+        m_TargetAssemblyTypeName: LoginMenuUI, Assembly-CSharp
         m_MethodName: OnSignInButtonClick
         m_Mode: 1
         m_Arguments:
@@ -4837,8 +4868,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 374643483}
-          m_TargetAssemblyTypeName: RegistationAndLogin, Assembly-CSharp
+        - m_Target: {fileID: 148108555}
+          m_TargetAssemblyTypeName: LoginMenuUI, Assembly-CSharp
           m_MethodName: OnRegTextClick
           m_Mode: 1
           m_Arguments:
