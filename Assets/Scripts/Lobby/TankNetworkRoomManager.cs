@@ -78,26 +78,22 @@ public class TankNetworkRoomManager : NetworkRoomManager
         if (team == 0)
         {
             var position = startPositions[team * 5 + teamPlayersCount[team]];
-            teamPlayersCount[team]++;
             return position;
-
         }
         if (team == 1)
         {
             var position = startPositions[team * 5 + teamPlayersCount[team]];
-            teamPlayersCount[team]++;
             return position;
         }
         if (team == 2)
         {
             var position = startPositions[team * 5 + teamPlayersCount[team]];
-            teamPlayersCount[team]++;
+            
             return position;
         }
         if (team == 3)
         {
             var position = startPositions[team * 5 + teamPlayersCount[team]];
-            teamPlayersCount[team]++;
             return position;
         }
         return null;

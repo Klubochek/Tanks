@@ -133,12 +133,12 @@ GameObject:
   m_Component:
   - component: {fileID: 53035538}
   - component: {fileID: 53035539}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GreenTeamSpawn4
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &53035538
 Transform:
@@ -312,12 +312,12 @@ GameObject:
   m_Component:
   - component: {fileID: 209984491}
   - component: {fileID: 209984492}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: YellowTeamSpawn5
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &209984491
 Transform:
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 230883953}
   - component: {fileID: 230883952}
   - component: {fileID: 230883951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TerrainGroup_0
   m_TagString: Surface
   m_Icon: {fileID: 0}
@@ -502,12 +502,12 @@ GameObject:
   m_Component:
   - component: {fileID: 263880067}
   - component: {fileID: 263880068}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GreenTeamSpawn3
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &263880067
 Transform:
@@ -671,6 +671,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 268016986}
   m_CullTransparentMesh: 1
+--- !u!1 &281752849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 281752852}
+  - component: {fileID: 281752851}
+  m_Layer: 0
+  m_Name: MinimapCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &281752851
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281752849}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 8
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: ee1c055afa808534fb511d72bf9d4be7, type: 2}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &281752852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281752849}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 500, y: 800, z: 500}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &352071625
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,12 +832,12 @@ GameObject:
   m_Component:
   - component: {fileID: 396017860}
   - component: {fileID: 396017861}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlueTeamSpawn1
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &396017860
 Transform:
@@ -880,12 +955,12 @@ GameObject:
   m_Component:
   - component: {fileID: 463526634}
   - component: {fileID: 463526635}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BrownTeamSpawn4
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &463526634
 Transform:
@@ -924,12 +999,12 @@ GameObject:
   m_Component:
   - component: {fileID: 518253541}
   - component: {fileID: 518253542}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BrownTeamSpawn5
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &518253541
 Transform:
@@ -1291,12 +1366,12 @@ GameObject:
   m_Component:
   - component: {fileID: 622450089}
   - component: {fileID: 622450090}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: YellowTeamSpawn3
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &622450089
 Transform:
@@ -2311,12 +2386,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1142489287}
   - component: {fileID: 1142489288}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BrownTeamSpawn2
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1142489287
 Transform:
@@ -2355,12 +2430,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1160019819}
   - component: {fileID: 1160019820}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BrownTeamSpawn1
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1160019819
 Transform:
@@ -2399,12 +2474,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1165287584}
   - component: {fileID: 1165287585}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GreenTeamSpawn1
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1165287584
 Transform:
@@ -2443,12 +2518,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1200335245}
   - component: {fileID: 1200335246}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlueTeamSpawn5
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1200335245
 Transform:
@@ -2487,12 +2562,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1256175552}
   - component: {fileID: 1256175553}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlueTeamSpawn3
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1256175552
 Transform:
@@ -2530,12 +2605,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1284251150}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1284251150
 Transform:
@@ -2717,12 +2792,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1343107478}
   - component: {fileID: 1343107479}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: YellowTeamSpawn4
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1343107478
 Transform:
@@ -2751,6 +2826,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f84591ce72545258ea98cb7518d8b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1369560457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1369560458}
+  - component: {fileID: 1369560460}
+  - component: {fileID: 1369560459}
+  m_Layer: 5
+  m_Name: MinimapGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1369560458
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369560457}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1812118465}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1369560459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369560457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: fc3307dda3eaf7e429de069ddaea41ca, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1369560460
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369560457}
+  m_CullTransparentMesh: 1
 --- !u!1 &1381648157
 GameObject:
   m_ObjectHideFlags: 0
@@ -2932,6 +3083,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410843856}
   m_CullTransparentMesh: 1
+--- !u!1 &1438442487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1438442488}
+  - component: {fileID: 1438442490}
+  - component: {fileID: 1438442489}
+  m_Layer: 5
+  m_Name: MinimapPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1438442488
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438442487}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1812118465}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 400}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1438442489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438442487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 8400000, guid: ee1c055afa808534fb511d72bf9d4be7, type: 2}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1438442490
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438442487}
+  m_CullTransparentMesh: 1
 --- !u!1 &1480614332
 GameObject:
   m_ObjectHideFlags: 0
@@ -2942,12 +3166,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1480614333}
   - component: {fileID: 1480614334}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: YellowTeamSpawn2
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1480614333
 Transform:
@@ -2986,12 +3210,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1481540278}
   - component: {fileID: 1481540279}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GreenTeamSpawn5
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1481540278
 Transform:
@@ -3377,12 +3601,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1662916271}
   - component: {fileID: 1662916272}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlueTeamSpawn2
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1662916271
 Transform:
@@ -3421,12 +3645,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1770228785}
   - component: {fileID: 1770228786}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GreenTeamSpawn2
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1770228785
 Transform:
@@ -3641,12 +3865,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1803334109}
   - component: {fileID: 1803334110}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlueTeamSpawn4
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1803334109
 Transform:
@@ -3685,7 +3909,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1812118465}
   - component: {fileID: 1812118467}
-  - component: {fileID: 1812118466}
   m_Layer: 5
   m_Name: Minimap
   m_TagString: Untagged
@@ -3704,7 +3927,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1369560458}
+  - {fileID: 1438442488}
   m_Father: {fileID: 702133447}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3713,36 +3938,6 @@ RectTransform:
   m_AnchoredPosition: {x: -200, y: 200}
   m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1812118466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812118464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fc3307dda3eaf7e429de069ddaea41ca, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1812118467
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3761,12 +3956,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1854322507}
   - component: {fileID: 1854322508}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BrownTeamSpawn3
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1854322507
 Transform:
@@ -3853,7 +4048,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3924,12 +4119,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1923234515}
   - component: {fileID: 1923234516}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: YellowTeamSpawn1
   m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &1923234515
 Transform:
@@ -4037,12 +4232,12 @@ GameObject:
   - component: {fileID: 2067451196}
   - component: {fileID: 2067451195}
   - component: {fileID: 2067451198}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Terrain_0_0_52eccd63-b618-47e7-aaec-e9d7c9859a33
   m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 127
   m_IsActive: 1
 --- !u!4 &2067451194
 Transform:
