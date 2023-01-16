@@ -1,7 +1,5 @@
 using Cinemachine;
 using Mirror;
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,26 +7,26 @@ namespace Tanks.Input
 {
     public class PlayerCameraController : NetworkBehaviour
     {
-        [SerializeField] private Vector2 maxFollowOffset = new Vector2(-1f, 6f);
-        [SerializeField] private Vector2 cameraVelocity = new Vector2(4f, 0.25f);
-        [SerializeField] private Transform towerTransform;
-        [SerializeField] private CinemachineVirtualCamera virtualCamera;
-        [SerializeField] private CinemachineVirtualCamera scopelCamera;
-        [SerializeField] private TowerController towerController;
-        [SerializeField] private GameObject aimBg;
-        [SerializeField] private CameraManager cameraManager;
-        [SerializeField] private TankStats tankStats;
+        [SerializeField] private Vector2 _maxFollowOffset = new Vector2(-1f, 6f);
+        [SerializeField] private Vector2 _cameraVelocity = new Vector2(4f, 0.25f);
+        [SerializeField] private Transform _towerTransform;
+        [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+        [SerializeField] private CinemachineVirtualCamera _scopelCamera;
+        [SerializeField] private TowerController _towerController;
+        [SerializeField] private GameObject _aimBg;
+        [SerializeField] private CameraManager _cameraManager;
+        [SerializeField] private TankStats _tankStats;
 
 
-        private CinemachineTransposer transposer;
-        private Controls controls;
+        private CinemachineTransposer _transposer;
+        private Controls _controls;
         public InputAction input;
-        private Controls TankControls
+        public Controls TankControls
         {
             get
             {
-                if (controls != null) { return controls; }
-                return controls = new Controls();
+                if (_controls != null) { return _controls; }
+                return _controls = new Controls();
             }
         }
         [ClientCallback]
@@ -44,16 +42,16 @@ namespace Tanks.Input
 
         public override void OnStartClient()
         {
-            cameraManager = FindObjectOfType<CameraManager>();
-            cameraManager.cameraObjs.Add(virtualCamera.gameObject);
+            _cameraManager = FindObjectOfType<CameraManager>();
+            _cameraManager.cameraObjs.Add(_virtualCamera.gameObject);
         }
         public override void OnStartAuthority()
         {
-            cameraManager = FindObjectOfType<CameraManager>();
-            aimBg = GameObject.FindGameObjectWithTag("Aimbg");
-            aimBg.SetActive(false);
-            transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-            virtualCamera.gameObject.SetActive(true);
+            _cameraManager = FindObjectOfType<CameraManager>();
+            _aimBg = GameObject.FindGameObjectWithTag("Aimbg");
+            _aimBg.SetActive(false);
+            _transposer = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+            _virtualCamera.gameObject.SetActive(true);
             enabled = true;
 
 
@@ -65,15 +63,15 @@ namespace Tanks.Input
             TankControls.Player.Scope.canceled += ctx => StartScope(false); ;
             TankControls.Player.SwitchCamera.performed += ctx => SwitchCamera();
 
-           
-            cameraManager.currentCamera = virtualCamera.gameObject;
+
+            _cameraManager.currentCamera = _virtualCamera.gameObject;
         }
 
         private void SwitchCamera()
         {
-            if (tankStats.isDead)
+            if (_tankStats.IsDead)
             {
-                cameraManager.SwitchCamera();
+                _cameraManager.SwitchCamera();
             }
         }
 
@@ -81,35 +79,35 @@ namespace Tanks.Input
         {
             if (isScope)
             {
-                virtualCamera.gameObject.SetActive(false);
-                scopelCamera.gameObject.SetActive(true);
-                aimBg.SetActive(true);
+                _virtualCamera.gameObject.SetActive(false);
+                _scopelCamera.gameObject.SetActive(true);
+                _aimBg.SetActive(true);
             }
             else
             {
-                virtualCamera.gameObject.SetActive(true);
-                scopelCamera.gameObject.SetActive(false);
-                aimBg.SetActive(false);
+                _virtualCamera.gameObject.SetActive(true);
+                _scopelCamera.gameObject.SetActive(false);
+                _aimBg.SetActive(false);
             }
 
         }
         private void Look(Vector2 vector2)
         {
-            if (transposer == null)
+            if (_transposer == null)
                 Debug.Log("Null transposer");
-            if (virtualCamera == null) Debug.Log("Null camera");
-            if (transposer != null && !tankStats.isDead)
+            if (_virtualCamera == null) Debug.Log("Null camera");
+            if (_transposer != null && !_tankStats.IsDead)
             {
                 float deltaTime = Time.deltaTime;
                 float folloOffset = Mathf.Clamp(
-                    transposer.m_FollowOffset.y - (vector2.y * cameraVelocity.y * deltaTime),
-                    maxFollowOffset.x,
-                    maxFollowOffset.y);
-                transposer.m_FollowOffset.y = folloOffset;
+                    _transposer.m_FollowOffset.y - (vector2.y * _cameraVelocity.y * deltaTime),
+                    _maxFollowOffset.x,
+                    _maxFollowOffset.y);
+                _transposer.m_FollowOffset.y = folloOffset;
 
 
-                towerController.RotateTower(new Vector3(0f, vector2.x * cameraVelocity.x * deltaTime, 0f));
-                towerController.RotateWeapon(new Vector3(vector2.y, 0, 0));
+                _towerController.RotateTower(new Vector3(0f, vector2.x * _cameraVelocity.x * deltaTime, 0f));
+                _towerController.RotateWeapon(new Vector3(vector2.y, 0, 0));
             }
         }
     }

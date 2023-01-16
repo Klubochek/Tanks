@@ -34,31 +34,37 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     [SerializeField] private GameObject content;
     [SerializeField] private int maxTeamCount = 4;
 
-    private TankNetworkRoomManager room;
+    private TankNetworkRoomManager _room;
     private TankNetworkRoomManager Room
     {
         get
         {
-            if (room != null) { return room; }
-            return room = NetworkManager.singleton as TankNetworkRoomManager;
+            if (_room != null) { return _room; }
+            return _room = NetworkManager.singleton as TankNetworkRoomManager;
         }
     }
     #region Callbacks
     public override void OnStartAuthority()
     {
         CmdSetDisplayName(playerData.PlayerName);
+        CmdSetTankPlayer();
     }
     public override void OnStartClient()
     {
         Room.tankRoomPlayers.Add(this);
-        CmdSetTankPlayer();
+        
         UpdateDisplay();
     }
     public override void OnStopClient()
     {
         Room.tankRoomPlayers.Remove(this);
-        CmdRemoveTankPlayer();
+        
         UpdateDisplay();
+    }
+    public override void OnStopAuthority()
+    {
+        base.OnStopAuthority();
+        CmdRemoveTankPlayer();
     }
     #endregion
     public void StartGame()
@@ -113,7 +119,7 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     {
         if (SceneManager.GetActiveScene().name == "OnlineScene")
         {
-            FindObjectOfType<InGameUI>().tankNetwork = this;
+            FindObjectOfType<InGameUI>().TankNetwork = this;
         }
         else
         {
@@ -161,7 +167,6 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
         IsReady = !IsReady;
         Debug.Log(IsReady);
     }
-    //ТЕстовые команды
     [Command]
     private void CmdSetTankPlayer()
     {

@@ -1,17 +1,16 @@
-using Mirror;
 using TMPro;
 using UnityEngine;
 
 public class InGameUI : MonoBehaviour
 {
-    [SerializeField] private GameObject inGameMemu;
-    [SerializeField] private GameObject backToLobbyButton;
-    [SerializeField] private TankNetworkRoomManager Room;
+    [SerializeField] private GameObject _inGameMemu;
+    [SerializeField] private GameObject _backToLobbyButton;
+    [SerializeField] private TankNetworkRoomManager _room;
     [SerializeField] private TankNetworkRoomPlayer _tankNetwork;
-    [SerializeField] private TextMeshProUGUI cdText;
-    [SerializeField] private TextMeshProUGUI shellCountText;
-    [SerializeField] private TextMeshProUGUI endGameText;
-    public TankNetworkRoomPlayer tankNetwork
+    [SerializeField] private TextMeshProUGUI _cdText;
+    [SerializeField] private TextMeshProUGUI _shellCountText;
+    [SerializeField] private TextMeshProUGUI _endGameText;
+    public TankNetworkRoomPlayer TankNetwork
     {
         get { return _tankNetwork; }
         set
@@ -23,33 +22,33 @@ public class InGameUI : MonoBehaviour
 
     private void Start()
     {
-        Room = FindObjectOfType<TankNetworkRoomManager>();
+        _room = FindObjectOfType<TankNetworkRoomManager>();
     }
     public void UpdateCDandShell(int count, bool hasCD)
     {
-        shellCountText.text = "Shell Count:" + count.ToString();
+        _shellCountText.text = "Shell Count:" + count.ToString();
         if (hasCD)
-            cdText.text = $"<color=red> Reloading...</color>";
+            _cdText.text = $"<color=red> Reloading...</color>";
         else
-            cdText.text = $"<color=green> Ready to fire</color>";
+            _cdText.text = $"<color=green> Ready to fire</color>";
     }
     private void UpDateUI()
     {
         if (_tankNetwork.IsLeader)
         {
-            backToLobbyButton.SetActive(true);
+            _backToLobbyButton.SetActive(true);
         }
     }
     public void OnDisconnectButtonClick()
     {
         Debug.Log("Disconneting...");
-        foreach (var player in Room.tankRoomPlayers)
+        foreach (var player in _room.tankRoomPlayers)
         {
             if (player.isOwned)
             {
                 if (player.IsLeader)
                 {
-                    Room.StopHost();
+                    _room.StopHost();
                     break;
                 }
                 player.CmdDisconnect();
@@ -60,25 +59,25 @@ public class InGameUI : MonoBehaviour
     }
     public void OnContinueButtonClick()
     {
-        inGameMemu.SetActive(false);
+        _inGameMemu.SetActive(false);
     }
     public void OnMenuButtonClick()
     {
-        inGameMemu.SetActive(true);
+        _inGameMemu.SetActive(true);
     }
     public void OnBackToLobbyButtonClick()
     {
-        Room.ServerChangeScene(Room.RoomScene);
+        _room.ServerChangeScene(_room.RoomScene);
     }
     public void ShowWinner(int team)
     {
         if (team == 0)
-            endGameText.text = "Победила голубая команда";
+            _endGameText.text = "Победила голубая команда";
         if (team == 1)
-            endGameText.text = "Победила желтая команда";
+            _endGameText.text = "Победила желтая команда";
         if (team == 2)
-            endGameText.text = "Победила зеленая команда";
+            _endGameText.text = "Победила зеленая команда";
         if (team == 3)
-            endGameText.text = "Победила коричневая команда";
+            _endGameText.text = "Победила коричневая команда";
     }
 }

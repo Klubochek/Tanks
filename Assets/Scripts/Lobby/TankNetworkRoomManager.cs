@@ -7,28 +7,29 @@ public class TankNetworkRoomManager : NetworkRoomManager
 
     public List<TankNetworkRoomPlayer> tankRoomPlayers = new List<TankNetworkRoomPlayer>();
     public List<GameObject> CurrentPlayerTanks = new List<GameObject>();
-    [SerializeField] private List<GameObject> tankPrefabs;
-    [SerializeField] private GameObject content;
+    [SerializeField] private List<GameObject> _tankPrefabs;
+    [SerializeField] private GameObject _content;
 
 
-    [SerializeField] private TeamManager teamManager;
+    [SerializeField] private TeamManager _teamManager;
 
 
 
 
-    private MongoModule mongoModule;
+    private MongoModule _mongoModule;
 
     #region ServerCallbacks
 
     public override void OnStartServer()
     {
         base.OnStartServer();
-        mongoModule = new MongoModule(true);
+        _mongoModule = new MongoModule(true);
     }
     public override void OnStopServer()
     {
+        _mongoModule.DeleteServerData();
         base.OnStopServer();
-        mongoModule.DeleteServerData();
+        
     }
 
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
@@ -42,9 +43,9 @@ public class TankNetworkRoomManager : NetworkRoomManager
 
         var tankStats = gamePlayer.GetComponent<TankStats>();
 
-        tankStats.hp = tankStats.MAXHP;
+        tankStats.HP = tankStats.MAXHP;
 
-        tankStats.nickname = tankPlayer.PlayerName;
+        tankStats.Nickname = tankPlayer.PlayerName;
 
         tankStats.Team = tankPlayer.Team;
 
@@ -74,7 +75,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
 
     public Transform ChooseStartPosition(int team)
     {
-        var teamPlayersCount = teamManager.CurrentTeams;
+        var teamPlayersCount = _teamManager.CurrentTeams;
         if (team == 0)
         {
             var position = startPositions[team * 5 + teamPlayersCount[team]];
@@ -101,7 +102,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
 
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
-        if (teamManager == null) teamManager = FindObjectOfType<TeamManager>();
+        if (_teamManager == null) _teamManager = FindObjectOfType<TeamManager>();
         var team = roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team;
         Transform startPos = ChooseStartPosition(team);
         Debug.Log("Team:" + team);
@@ -111,7 +112,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
         CurrentPlayerTanks.Add(TankPlayer);
 
         
-        teamManager.AddTankToTeam(team);
+        _teamManager.AddTankToTeam(team);
         return TankPlayer;
     }
     public override void OnClientSceneChanged()

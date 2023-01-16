@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class TankMinimap : NetworkBehaviour
 {
-    [SerializeField] private SpriteRenderer currentIcon;
-    [SerializeField] private Sprite whiteTankIcon;
+    [SerializeField] private SpriteRenderer _currentIcon;
+    [SerializeField] private Sprite _whiteTankIcon;
 
 
     public override void OnStartAuthority()
     {
-        currentIcon.sprite = whiteTankIcon;
+        _currentIcon.sprite = _whiteTankIcon;
     }
 }

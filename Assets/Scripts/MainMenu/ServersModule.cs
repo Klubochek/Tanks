@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ServersModule : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> serversList;
-    [SerializeField] private GameObject serverPrefab;
-    [SerializeField] private GameObject content;
+    [SerializeField] private List<GameObject> _serversList;
+    [SerializeField] private GameObject _serverPrefab;
+    [SerializeField] private GameObject _content;
 
     public void CreateNewServerList(IQueryable<TankServer> allServers)
     {
@@ -18,18 +18,18 @@ public class ServersModule : MonoBehaviour
         }
         foreach (var server in allServers)
         {
-            GameObject serverBar = Instantiate(serverPrefab, content.transform);
-            serversList.Add(serverBar);
+            GameObject serverBar = Instantiate(_serverPrefab, _content.transform);
+            _serversList.Add(serverBar);
 
             serverBar.GetComponent<ServerBar>().SetupServerParams(server.ServerName, server.IP);
         }
     }
     public void DestroyServerBars()
     {
-        foreach (var server in serversList)
+        foreach (var server in _serversList)
         {
             Destroy(server);
         }
-        serversList.Clear();
+        _serversList.Clear();
     }
 }

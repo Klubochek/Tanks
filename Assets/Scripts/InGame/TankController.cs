@@ -1,6 +1,5 @@
-using UnityEngine;
 using Mirror;
-using System;
+using UnityEngine;
 
 namespace Tanks.Input
 {
@@ -8,46 +7,45 @@ namespace Tanks.Input
 
     public class TankController : NetworkBehaviour
     {
-        [SerializeField] private float rotationSpeed;
-        [SerializeField] private float speedForward;
-        [SerializeField] private float speedBack;
-        [SerializeField] private Rigidbody tankbody;
-        [SerializeField] private TankAudio tankAudio;
+        [SerializeField] private float _rotationSpeed;
+        [SerializeField] private float _speed;
+        [SerializeField] private Rigidbody _tankbody;
+        [SerializeField] private TankAudio _tankAudio;
 
 
-        private bool IsMoving = false;
-        private Vector2 moveDirection;
-        private Controls controls;
-        private Controls TankControls
+        private bool _isMoving = false;
+        private Vector2 _moveDirection;
+        public Controls Controls;
+        private Controls _tankControls
         {
             get
             {
-                if (controls != null) { return controls; }
-                return controls = new Controls();
+                if (Controls != null) { return Controls; }
+                return Controls = new Controls();
             }
         }
         [ClientCallback]
         private void OnEnable()
         {
-            TankControls.Enable();
+            _tankControls.Enable();
         }
         [ClientCallback]
         private void OnDisable()
         {
-            TankControls.Disable();
+            _tankControls.Disable();
         }
         public override void OnStartAuthority()
         {
             Cursor.visible = false;
             enabled = true;
-            TankControls.Player.WASD.performed += ctx => SetMoveDirection(ctx.ReadValue<Vector2>());
-            TankControls.Player.WASD.canceled += ctx => ResetMoveDirection();
-            TankControls.Player.Cursor.performed += ctx => ShowCursor();
-            TankControls.Player.Cursor.canceled += ctx => HideCursor();
+            _tankControls.Player.WASD.performed += ctx => SetMoveDirection(ctx.ReadValue<Vector2>());
+            _tankControls.Player.WASD.canceled += ctx => ResetMoveDirection();
+            _tankControls.Player.Cursor.performed += ctx => ShowCursor();
+            _tankControls.Player.Cursor.canceled += ctx => HideCursor();
         }
         private void HideCursor()
         {
-            Cursor.visible=false;
+            Cursor.visible = false;
         }
 
         private void ShowCursor()
@@ -57,25 +55,25 @@ namespace Tanks.Input
 
         private void SetMoveDirection(Vector2 vector2)
         {
-            moveDirection = vector2;
+            _moveDirection = vector2;
         }
 
         private void ResetMoveDirection()
         {
-            moveDirection = Vector2.zero;
+            _moveDirection = Vector2.zero;
         }
 
-        
+
         private void FixedUpdate()
         {
             if (!isOwned) { Debug.Log("NoAuth"); return; }
 
-            if (Mathf.Abs(moveDirection.y) > 0)
+            if (Mathf.Abs(_moveDirection.y) > 0)
             {
                 MoveBody();
             }
-            else IsMoving = false;
-            if (Mathf.Abs(moveDirection.x) > 0)
+            else _isMoving = false;
+            if (Mathf.Abs(_moveDirection.x) > 0)
             {
                 RotateBody();
             }
@@ -84,18 +82,18 @@ namespace Tanks.Input
 
         private void MoveBody()
         {
-            IsMoving = true;
-            tankbody.AddRelativeForce(new Vector3(0, 0, moveDirection.y) * -speedBack);
-            
+            _isMoving = true;
+            _tankbody.AddRelativeForce(new Vector3(0, 0, _moveDirection.y) * -_speed);
+
         }
 
         private void RotateBody()
         {
-            if(!IsMoving)
-                tankbody.AddRelativeTorque(new Vector3(0, moveDirection.x, 0) * rotationSpeed,ForceMode.VelocityChange);
+            if (!_isMoving)
+                _tankbody.AddRelativeTorque(new Vector3(0, _moveDirection.x, 0) * _rotationSpeed, ForceMode.VelocityChange);
             else
-                tankbody.AddRelativeTorque(new Vector3(0, moveDirection.x, 0) * rotationSpeed*0.8f,ForceMode.VelocityChange);
-            
+                _tankbody.AddRelativeTorque(new Vector3(0, _moveDirection.x, 0) * _rotationSpeed * 0.8f, ForceMode.VelocityChange);
+
         }
     }
 }

@@ -338,9 +338,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01add07a2eab093488c7e22a3df0f345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serversList: []
-  serverPrefab: {fileID: 2195974824465053326, guid: 2c7f2e75dd14af24dad719ef6b45d481, type: 3}
-  content: {fileID: 473622094}
+  _serversList: []
+  _serverPrefab: {fileID: 2195974824465053326, guid: 2c7f2e75dd14af24dad719ef6b45d481, type: 3}
+  _content: {fileID: 473622094}
 --- !u!1 &234168233
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,12 +1489,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ec0dec63e4dd32489d4836a7321e68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connector: {fileID: 1098187707}
-  connectionMenu: {fileID: 1015666406}
-  ip: {fileID: 928079082}
-  currentUserName: {fileID: 532916510}
-  playerData: {fileID: 11400000, guid: 205ef2cb853c4764281ddd23278b8f3c, type: 2}
-  serversModule: {fileID: 224121010}
+  _connector: {fileID: 1098187707}
+  _connectionMenu: {fileID: 1015666406}
+  _ip: {fileID: 928079082}
+  _currentUserName: {fileID: 532916510}
+  _playerData: {fileID: 11400000, guid: 205ef2cb853c4764281ddd23278b8f3c, type: 2}
+  _serversModule: {fileID: 224121010}
 --- !u!1 &473622094
 GameObject:
   m_ObjectHideFlags: 0
@@ -3351,7 +3351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369c6aa34b4f2bd42a430d962aed040b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkRoomManager: {fileID: 1330545284}
+  NetworkRoomManager: {fileID: 1330545284}
 --- !u!4 &1098187708
 Transform:
   m_ObjectHideFlags: 0
@@ -4040,7 +4040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
   runInBackground: 1
-  autoStartServerBuild: 1
+  autoStartServerBuild: 0
   autoConnectClientBuild: 0
   sendRate: 60
   offlineScene: Assets/Scenes/MainMenu.unity
@@ -4054,9 +4054,9 @@ MonoBehaviour:
   playerSpawnMethod: 1
   spawnPrefabs:
   - {fileID: 4185952276786843085, guid: ba68aabd3e594dc4d88faa12b8303bd2, type: 3}
-  - {fileID: 4185952276786843085, guid: c80a627c9315c5243a678814525691bd, type: 3}
-  - {fileID: 4185952276786843085, guid: bc4843114f848674385f5b81c69a69cb, type: 3}
-  - {fileID: 4185952276786843085, guid: 6dd36f034eff7a0489647e2796cba01a, type: 3}
+  - {fileID: 4185952276786843085, guid: 87b94f4a218489449a4aaed487710b62, type: 3}
+  - {fileID: 4185952276786843085, guid: 0d0a1824c69186f4a87942933e3ef33c, type: 3}
+  - {fileID: 4185952276786843085, guid: 75cdfb4ec2165284da17462cc810065b, type: 3}
   timeInterpolationGui: 0
   showRoomGUI: 0
   minPlayers: 2
@@ -4068,13 +4068,9 @@ MonoBehaviour:
   clientIndex: 0
   tankRoomPlayers: []
   CurrentPlayerTanks: []
-  tankPrefabs:
-  - {fileID: 4185952276786843085, guid: ba68aabd3e594dc4d88faa12b8303bd2, type: 3}
-  - {fileID: 4185952276786843085, guid: 7317221857504a14ab3979d202429e98, type: 3}
-  - {fileID: 4185952276786843085, guid: 27f1317aa5f771c409bceddf8f7f0d89, type: 3}
-  - {fileID: 4185952276786843085, guid: abcc6f8c01dbaff4e86e3ec66c87b491, type: 3}
-  content: {fileID: 0}
-  teamManager: {fileID: 0}
+  _tankPrefabs: []
+  _content: {fileID: 0}
+  _teamManager: {fileID: 0}
 --- !u!1 &1402754902
 GameObject:
   m_ObjectHideFlags: 0

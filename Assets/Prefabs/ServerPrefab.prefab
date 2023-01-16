@@ -497,9 +497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 291a83d699d48804b83f8415856aa996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverText: {fileID: 2195974823236894875}
-  ipAdresText: {fileID: 2195974823511144029}
-  tankNetworkRoomManager: {fileID: 0}
+  _serverText: {fileID: 2195974823236894875}
+  _ipAdresText: {fileID: 2195974823511144029}
+  _connector: {fileID: 0}
 --- !u!1 &2195974824718494300
 GameObject:
   m_ObjectHideFlags: 0

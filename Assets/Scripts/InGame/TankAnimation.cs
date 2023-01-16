@@ -1,21 +1,18 @@
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using Tanks.Input;
 using UnityEngine;
 
 public class TankAnimation : NetworkBehaviour
 {
-    [SerializeField] private Animator animator;
-    [SerializeField] private TankController tankController;
-    [SerializeField] private TowerController towerController;
-    [SerializeField] private PlayerCameraController playerCamera;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private TankController _tankController;
+    [SerializeField] private TowerController _towerController;
 
     public void PlayDestroyAnimation()
     {
-        tankController.enabled = false;
-        towerController.enabled = false;
-        
+        _tankController.enabled = false;
+        _towerController.enabled = false;
+
 
         CmdPlayDeathAnimation();
     }
@@ -27,6 +24,6 @@ public class TankAnimation : NetworkBehaviour
     [ClientRpc]
     private void RpcPlayDeathAnimation()
     {
-        animator.enabled = true;
+        _animator.enabled = true;
     }
 }

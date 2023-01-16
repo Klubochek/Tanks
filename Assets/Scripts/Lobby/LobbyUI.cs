@@ -4,37 +4,35 @@ using UnityEngine.SceneManagement;
 
 public class LobbyUI : MonoBehaviour
 {
-    private void Start()
-    {
-        Cursor.visible = true;
-    }
-
-    [SerializeField] private GameObject startGameButton;
-    private TankNetworkRoomPlayer tankNetworkRoomPlayer;
+    [SerializeField] private GameObject _startGameButton;
+    private TankNetworkRoomPlayer _tankNetworkRoomPlayer;
     public TankNetworkRoomPlayer TankNetworkRoomPlayer
     {
-        get { return tankNetworkRoomPlayer; }
+        get { return _tankNetworkRoomPlayer; }
         set
         {
-            tankNetworkRoomPlayer = value;
-            if (tankNetworkRoomPlayer.IsLeader)
+            _tankNetworkRoomPlayer = value;
+            if (_tankNetworkRoomPlayer.IsLeader)
             {
-                startGameButton.SetActive(true);
+                _startGameButton.SetActive(true);
                 ;
             }
         }
     }
 
-    private TankNetworkRoomManager room;
+    private TankNetworkRoomManager _room;
     private TankNetworkRoomManager Room
     {
         get
         {
-            if (room != null) { return room; }
-            return room = NetworkManager.singleton as TankNetworkRoomManager;
+            if (_room != null) { return _room; }
+            return _room = NetworkManager.singleton as TankNetworkRoomManager;
         }
     }
-
+    private void Start()
+    {
+        Cursor.visible = true;
+    }
     public void OnReadyButtonClick()
     {
         foreach (var player in Room.tankRoomPlayers)

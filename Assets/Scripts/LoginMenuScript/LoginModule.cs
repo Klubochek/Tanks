@@ -8,16 +8,16 @@ public class LoginModule : MonoBehaviour
 {
     public LoginModule(PlayerData playerData)
     {
-        this.playerData = playerData;
+        _playerData = playerData;
     }
 
-    private PlayerData playerData;
-    private TextMeshProUGUI logResultText;
+    private PlayerData _playerData;
+    private TextMeshProUGUI _logResultText;
 
 
     public void LogIn(string email, string password, TextMeshProUGUI logResult)
     {
-        logResultText = logResult;
+        _logResultText = logResult;
         var request = new LoginWithEmailAddressRequest
         {
             Email = email,
@@ -27,14 +27,14 @@ public class LoginModule : MonoBehaviour
     }
     private void ShowLoginError(PlayFabError obj)
     {
-        logResultText.text = obj.ErrorMessage;
+        _logResultText.text = obj.ErrorMessage;
         return;
     }
 
     private void ShowLoginResult(LoginResult obj)
     {
-        logResultText.color = Color.green;
-        logResultText.text = obj.ToString();
+        _logResultText.color = Color.green;
+        _logResultText.text = obj.ToString();
         Debug.Log(obj.PlayFabId);
         var request = new GetPlayerProfileRequest { PlayFabId = obj.PlayFabId };
         PlayFabClientAPI.GetPlayerProfile(request, SetCurrentUser, ShowLoginError);
@@ -44,7 +44,7 @@ public class LoginModule : MonoBehaviour
     private void SetCurrentUser(GetPlayerProfileResult obj)
     {
         Debug.Log(obj.PlayerProfile.DisplayName);
-        playerData.PlayerName = obj.PlayerProfile.DisplayName;
+        _playerData.PlayerName = obj.PlayerProfile.DisplayName;
         SceneManager.LoadScene(1);
         return;
     }

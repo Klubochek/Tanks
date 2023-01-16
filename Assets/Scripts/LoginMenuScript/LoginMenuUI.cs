@@ -7,51 +7,51 @@ using UnityEngine.SceneManagement;
 public class LoginMenuUI : MonoBehaviour
 {
     //Login fields and text
-    [SerializeField] private TMP_InputField emailField;
-    [SerializeField] private TMP_InputField passField;
-    [SerializeField] private TextMeshProUGUI logStatusText;
+    [SerializeField] private TMP_InputField _emailField;
+    [SerializeField] private TMP_InputField _passField;
+    [SerializeField] private TextMeshProUGUI _logStatusText;
 
     //Registation fields and text
-    [SerializeField] private TMP_InputField regEmailField;
-    [SerializeField] private TMP_InputField regNickField;
-    [SerializeField] private TMP_InputField regPass;
-    [SerializeField] private TMP_InputField regConfirmPass;
-    [SerializeField] private TextMeshProUGUI regStatusText;
+    [SerializeField] private TMP_InputField _regEmailField;
+    [SerializeField] private TMP_InputField _regNickField;
+    [SerializeField] private TMP_InputField _regPass;
+    [SerializeField] private TMP_InputField _regConfirmPass;
+    [SerializeField] private TextMeshProUGUI _regStatusText;
 
     //Menu objects
-    [SerializeField] private GameObject regMenu;
-    [SerializeField] private GameObject logMenu;
+    [SerializeField] private GameObject _regMenu;
+    [SerializeField] private GameObject _logMenu;
 
     
     // ScriptableObject for PlayerData;
-    [SerializeField] private PlayerData playerData;
+    [SerializeField] private PlayerData _playerData;
 
-    private RegistationModule registationModule;
-    private LoginModule loginModule;
+    private RegistationModule _registationModule;
+    private LoginModule _loginModule;
 
     private void Awake()
     {
-        loginModule = new LoginModule(playerData);
+        _loginModule = new LoginModule(_playerData);
     }
 
     public void OnRegTextClick()
     {
-        logMenu.SetActive(false);
-        regMenu.SetActive(true);
-        registationModule = new RegistationModule();
+        _logMenu.SetActive(false);
+        _regMenu.SetActive(true);
+        _registationModule = new RegistationModule();
     }
     public void OnSignUpButtonClick()
     {
-        registationModule.RegisterNewUser(regNickField.text, regEmailField.text, regPass.text, regConfirmPass.text,regStatusText);
+        _registationModule.RegisterNewUser(_regNickField.text, _regEmailField.text, _regPass.text, _regConfirmPass.text,_regStatusText);
     }
     public void OnBackButtonClick()
     {
-        regMenu.SetActive(false);
-        logMenu.SetActive(true);
+        _regMenu.SetActive(false);
+        _logMenu.SetActive(true);
     }
     public void OnSignInButtonClick()
     {
-        loginModule.LogIn(emailField.text, passField.text, logStatusText);
+        _loginModule.LogIn(_emailField.text, _passField.text, _logStatusText);
     }
    
 

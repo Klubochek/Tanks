@@ -7,7 +7,7 @@ using System;
 public class TeamManager : NetworkBehaviour
 {
     public List<int> CurrentTeams = new List<int> { 0, 0, 0, 0 };
-    [SerializeField] private InGameUI inGameUI;
+    [SerializeField] private InGameUI _inGameUI;
 
     public void AddTankToTeam(int team)
     {
@@ -42,7 +42,7 @@ public class TeamManager : NetworkBehaviour
     [ClientRpc]
     private void RpcShowWinner(int teamWinner)
     {
-        inGameUI.ShowWinner(teamWinner);
+        _inGameUI.ShowWinner(teamWinner);
 
     }
     private IEnumerator StopServer()

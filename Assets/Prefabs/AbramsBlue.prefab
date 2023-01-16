@@ -643,6 +643,7 @@ GameObject:
   - component: {fileID: 8766554427013989569}
   - component: {fileID: 6388702095975467355}
   - component: {fileID: 4206929534145238651}
+  - component: {fileID: -962226107780966251}
   m_Layer: 0
   m_Name: AbramsBlue
   m_TagString: Player
@@ -684,11 +685,10 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  rotationSpeed: 0.3
-  speedForward: 10
-  speedBack: 5000
-  tankbody: {fileID: 7541005869024829822}
-  tankAudio: {fileID: 3528660789890207825}
+  _rotationSpeed: 0.3
+  _speed: 6500
+  _tankbody: {fileID: 7541005869024829822}
+  _tankAudio: {fileID: 3528660789890207825}
 --- !u!114 &436260546807968456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,20 +704,20 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  tower: {fileID: 1367352284223437292}
-  ammoPrefab: {fileID: 8914794189955424306, guid: 8682cca0c4bf678469e32cb6065da906, type: 3}
-  weapon: {fileID: 2431126843792458464}
-  canon: {fileID: 714320200797110488}
-  tankAudio: {fileID: 3528660789890207825}
-  shellPool: {fileID: 5368005319004915883}
-  tankStats: {fileID: 5057529935287757853}
-  inGameUI: {fileID: 0}
-  rotationSpeed: 20
-  isShoting: 0
-  shotPower: 100
-  canonRotationSpeed: 0.1
-  maxCanonAngle: 20
-  cdTime: 5
+  _tower: {fileID: 1367352284223437292}
+  _ammoPrefab: {fileID: 8914794189955424306, guid: 8682cca0c4bf678469e32cb6065da906, type: 3}
+  _weapon: {fileID: 2431126843792458464}
+  _canon: {fileID: 714320200797110488}
+  _tankAudio: {fileID: 3528660789890207825}
+  _shellPool: {fileID: 5368005319004915883}
+  _tankStats: {fileID: 5057529935287757853}
+  _inGameUI: {fileID: 0}
+  _rotationSpeed: 1
+  _isShoting: 0
+  _shotPower: 100
+  _canonRotationSpeed: 0.05
+  _maxCanonAngle: 20
+  _cdTime: 5
 --- !u!114 &203576374099045552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1111,15 +1111,15 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  maxFollowOffset: {x: -1, y: 6}
-  cameraVelocity: {x: 10, y: 0.25}
-  towerTransform: {fileID: 1367352284223437292}
-  virtualCamera: {fileID: 5617971260453992765}
-  scopelCamera: {fileID: 250668948214925844}
-  towerController: {fileID: 436260546807968456}
-  aimBg: {fileID: 0}
-  cameraManager: {fileID: 0}
-  tankStats: {fileID: 5057529935287757853}
+  _maxFollowOffset: {x: -1, y: 6}
+  _cameraVelocity: {x: 4, y: 0.25}
+  _towerTransform: {fileID: 1367352284223437292}
+  _virtualCamera: {fileID: 5617971260453992765}
+  _scopelCamera: {fileID: 250668948214925844}
+  _towerController: {fileID: 436260546807968456}
+  _aimBg: {fileID: 0}
+  _cameraManager: {fileID: 0}
+  _tankStats: {fileID: 5057529935287757853}
   input:
     m_Name: Input
     m_Type: 0
@@ -1144,10 +1144,10 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  tankShot: {fileID: 7862932711526438726}
-  tankMove: {fileID: 8477562364890620054}
-  tankIdleState: {fileID: 8300000, guid: f6e5725ef44b1344695eacca2eb1abb7, type: 3}
-  tankMoveState: {fileID: 8300000, guid: 65459d0cf7966e84c924286a42455f4e, type: 3}
+  _tankShot: {fileID: 7862932711526438726}
+  _tankMove: {fileID: 8477562364890620054}
+  _tankIdleState: {fileID: 0}
+  _tankMoveState: {fileID: 8300000, guid: 65459d0cf7966e84c924286a42455f4e, type: 3}
 --- !u!114 &5057529935287757853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1163,17 +1163,16 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
+  _teamManager: {fileID: 0}
+  _tankPlayer: {fileID: 0}
+  _room: {fileID: 0}
+  _tankTextNameAndHp: {fileID: 6317617556849076776}
+  _joint: {fileID: 2645347740609734309}
   ShellCount: 50
-  tankPlayer: {fileID: 0}
-  Room: {fileID: 0}
-  tankTextNameAndHp: {fileID: 6317617556849076776}
-  tankNetworkRoomManager: {fileID: 0}
-  joint: {fileID: 2645347740609734309}
-  isDead: 0
-  nickname: Loading...
-  hp: 0
+  IsDead: 0
+  Nickname: Loading...
+  HP: 0
   Team: 0
-  teamManager: {fileID: 0}
 --- !u!114 &-6758985117699325777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,10 +1188,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  animator: {fileID: 8766554427013989569}
-  tankController: {fileID: 8412918925341140617}
-  towerController: {fileID: 436260546807968456}
-  playerCamera: {fileID: 2189318182710746804}
+  _animator: {fileID: 8766554427013989569}
+  _tankController: {fileID: 8412918925341140617}
+  _towerController: {fileID: 436260546807968456}
 --- !u!114 &5381461759765893236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,8 +1206,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  currentIcon: {fileID: 8205382311843748672}
-  whiteTankIcon: {fileID: 21300000, guid: 773c5c242e43ee1449b583906f404154, type: 3}
+  _currentIcon: {fileID: 8205382311843748672}
+  _whiteTankIcon: {fileID: 21300000, guid: 773c5c242e43ee1449b583906f404154, type: 3}
 --- !u!114 &5368005319004915883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1303,6 +1301,23 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+--- !u!114 &-962226107780966251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185952276786843085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  animator: {fileID: 8766554427013989569}
 --- !u!1 &4825244267605615565
 GameObject:
   m_ObjectHideFlags: 0

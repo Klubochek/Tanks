@@ -612,17 +612,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9b3a7f09ff46c439ffc2d0136203e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emailField: {fileID: 1408353690}
-  passField: {fileID: 98897746}
-  logStatusText: {fileID: 1613339460}
-  regEmailField: {fileID: 1569351483}
-  regNickField: {fileID: 435118441}
-  regPass: {fileID: 819240098}
-  regConfirmPass: {fileID: 294441272}
-  regStatusText: {fileID: 321842104}
-  regMenu: {fileID: 1705272911}
-  logMenu: {fileID: 1639067667}
-  playerData: {fileID: 11400000, guid: 205ef2cb853c4764281ddd23278b8f3c, type: 2}
+  _emailField: {fileID: 1408353690}
+  _passField: {fileID: 98897746}
+  _logStatusText: {fileID: 1613339460}
+  _regEmailField: {fileID: 1569351483}
+  _regNickField: {fileID: 435118441}
+  _regPass: {fileID: 819240098}
+  _regConfirmPass: {fileID: 294441272}
+  _regStatusText: {fileID: 321842104}
+  _regMenu: {fileID: 1705272911}
+  _logMenu: {fileID: 1639067667}
+  _playerData: {fileID: 11400000, guid: 205ef2cb853c4764281ddd23278b8f3c, type: 2}
 --- !u!1 &200980817
 GameObject:
   m_ObjectHideFlags: 0

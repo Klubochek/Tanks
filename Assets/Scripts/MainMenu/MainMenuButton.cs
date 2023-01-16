@@ -9,22 +9,22 @@ using UnityEngine;
 
 public class MainMenuButton : MonoBehaviour
 {
-    [SerializeField] private Connector connector;
-    [SerializeField] private GameObject connectionMenu;
-    [SerializeField] private TMP_InputField ip;
-    [SerializeField] private TextMeshProUGUI currentUserName;
-    [SerializeField] private PlayerData playerData;
+    [SerializeField] private Connector _connector;
+    [SerializeField] private GameObject _connectionMenu;
+    [SerializeField] private TMP_InputField _ip;
+    [SerializeField] private TextMeshProUGUI _currentUserName;
+    [SerializeField] private PlayerData _playerData;
     
 
     
-    [SerializeField] private ServersModule serversModule;
-    private MongoModule mongoModule;
+    [SerializeField] private ServersModule _serversModule;
+    private MongoModule _mongoModule;
     
     private void Start()
     {
-        mongoModule = new MongoModule();
+        _mongoModule = new MongoModule();
         Cursor.visible = true;
-        currentUserName.text = "Current User:" + "\n" + playerData.PlayerName;
+        _currentUserName.text = "Current User:" + "\n" + _playerData.PlayerName;
     }
     
     public void OnJoinButtonClick()
@@ -33,30 +33,30 @@ public class MainMenuButton : MonoBehaviour
     }
     public IEnumerator Join()
     {
-        connectionMenu.SetActive(true);
-        var allServers=mongoModule.LoadServers();
+        _connectionMenu.SetActive(true);
+        var allServers=_mongoModule.LoadServers();
         yield return new WaitUntil(() => allServers != null);
-        serversModule.CreateNewServerList(allServers);   
+        _serversModule.CreateNewServerList(allServers);   
     }
     
     public void OnConnectionWithOwnIpClick()
     {
-        connector.Join(ip.text);
+        _connector.Join(_ip.text);
     }
     public void OnCloseConnectionMenuButtonClick()
     {
-        serversModule.DestroyServerBars();
-        connectionMenu.SetActive(false);
+        _serversModule.DestroyServerBars();
+        _connectionMenu.SetActive(false);
     }
     public void OnRefreshButtonCLick()
     {
-        serversModule.DestroyServerBars();
+        _serversModule.DestroyServerBars();
         StartCoroutine(Join());
     }
 
     public void OnHostButtonClick()
     {
-        connector.Host();
+        _connector.Host();
     }
     public void OnExitButtonClick()
     {

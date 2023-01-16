@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class ServerBar : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI serverText;
-    [SerializeField] private TextMeshProUGUI ipAdresText;
-    [SerializeField] private Connector connector;
+    [SerializeField] private TextMeshProUGUI _serverText;
+    [SerializeField] private TextMeshProUGUI _ipAdresText;
+    [SerializeField] private Connector _connector;
 
     private void Start()
     {
-        connector = FindObjectOfType<Connector>();
+        _connector = FindObjectOfType<Connector>();
     }
     public void SetupServerParams(string serverName, string ip)
     {
-        serverText.text = serverName;
-        ipAdresText.text = ip;
+        _serverText.text = serverName;
+        _ipAdresText.text = ip;
     }
     public void OnConnectButtonClick()
     {
-        connector.Join(ipAdresText.text);
+        _connector.Join(_ipAdresText.text);
     }
 }

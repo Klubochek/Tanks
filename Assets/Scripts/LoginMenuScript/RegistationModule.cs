@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class RegistationModule : MonoBehaviour
 {
-    private TextMeshProUGUI regStatusText;
+    private TextMeshProUGUI _regStatusText;
 
 
     public void RegisterNewUser(string username, string email, string password, string spassword,TextMeshProUGUI regStatus)
     {
-        regStatusText = regStatus;
+        _regStatusText = regStatus;
         if (password != spassword) 
         {
-            regStatusText.text="Passwords do not match ";
-            regStatusText.color = Color.red;
+            _regStatusText.text="Passwords do not match ";
+            _regStatusText.color = Color.red;
             return; 
         }
         else
@@ -33,15 +33,15 @@ public class RegistationModule : MonoBehaviour
     }
     private void ShowRegError(PlayFabError obj)
     {
-        regStatusText.text = obj.ErrorMessage;
-        regStatusText.color = Color.red;
+        _regStatusText.text = obj.ErrorMessage;
+        _regStatusText.color = Color.red;
         return;
     }
 
     private void ShowRegResult(RegisterPlayFabUserResult obj)
     {
-        regStatusText.color = Color.green;
-        regStatusText.text = obj.ToString();
+        _regStatusText.color = Color.green;
+        _regStatusText.text = obj.ToString();
         return;
     }
 }

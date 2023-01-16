@@ -1,60 +1,53 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using Mirror;
 
 public class Shell : MonoBehaviour
 {
-    private ShellPool shellPool;
+
     public int TeamOwner;
-    public Coroutine coroutine;
-    public bool hasCollision;
+    private Coroutine _coroutine;
+    public bool HasCollision;
 
     private void OnEnable()
     {
-        shellPool = FindObjectOfType<ShellPool>();
-        coroutine = StartCoroutine(AutoDestroy());
+
+        _coroutine = StartCoroutine(AutoDestroy());
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Surface"))
         {
             Debug.Log("Colision with ground");
-            CmdDestroyShell(gameObject);
+            DestroyShell(gameObject);
 
         }
-        if (collision.gameObject.CompareTag("Player") && !hasCollision)
+        if (collision.gameObject.CompareTag("Player") && !HasCollision)
         {
-            hasCollision = true;
+            HasCollision = true;
             Debug.Log("Colision with player");
             var tankStats = collision.gameObject.GetComponentInParent<TankStats>();
-            if (tankStats.hp > 0 && tankStats.Team != TeamOwner)
+            if (tankStats.HP > 0 && tankStats.Team != TeamOwner)
             {
                 tankStats.Damage();
 
             }
-            Console.WriteLine($"Current hp:{tankStats.hp}");
-            if (tankStats.hp == 1)
+            Console.WriteLine($"Current hp:{tankStats.HP}");
+            if (tankStats.HP == 1)
             {
-                tankStats.joint.connectedBody = null;
+                tankStats._joint.connectedBody = null;
                 TankAnimation anim = collision.gameObject.transform.GetComponentInParent<TankAnimation>();
                 anim.PlayDestroyAnimation();
                 tankStats.Death();
             }
-            CmdDestroyShell(gameObject);
+            DestroyShell(gameObject);
         }
     }
 
-    //[Command]
-    public void CmdDestroyShell(GameObject gameObj)
+
+    private void DestroyShell(GameObject gameObject)
     {
-        RpcDestroyShell(gameObj);
-    }
-    //[ClientRpc]
-    private void RpcDestroyShell(GameObject gameObject)
-    {
-        StopCoroutine(coroutine);
-        //shellPool.shellPool.Add(gameObject);
+        StopCoroutine(_coroutine);
         gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
         var rb = gameObject.GetComponent<Rigidbody>();
         rb.velocity = Vector3.zero;
@@ -65,6 +58,6 @@ public class Shell : MonoBehaviour
     private IEnumerator AutoDestroy()
     {
         yield return new WaitForSeconds(5);
-        CmdDestroyShell(gameObject);
+        DestroyShell(gameObject);
     }
 }

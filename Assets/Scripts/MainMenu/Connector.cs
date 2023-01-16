@@ -5,25 +5,25 @@ using Mirror;
 
 public class Connector : MonoBehaviour
 {
-    public NetworkRoomManager networkRoomManager;
+    public NetworkRoomManager NetworkRoomManager;
 
     public void Join(string IP)
     {
         if (IP != string.Empty) 
         {
-            networkRoomManager.networkAddress = IP;
-            networkRoomManager.StartClient(); 
+            NetworkRoomManager.networkAddress = IP;
+            NetworkRoomManager.StartClient(); 
         }
             
         
         else {
-            networkRoomManager.networkAddress = "localhost";
-            networkRoomManager.StartClient();
+            NetworkRoomManager.networkAddress = "localhost";
+            NetworkRoomManager.StartClient();
         }
 
     }
     public void Host()
     {
-        networkRoomManager.StartHost();
+        NetworkRoomManager.StartHost();
     }
 }

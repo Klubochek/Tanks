@@ -5,38 +5,31 @@ using UnityEngine;
 
 public class TankStats : NetworkBehaviour
 {
+    [SerializeField] private TeamManager _teamManager;
+    [SerializeField] private TankNetworkRoomPlayer _tankPlayer;
+    [SerializeField] private TankNetworkRoomManager _room;
+    [SerializeField] private TextMeshPro _tankTextNameAndHp;
+    [SerializeField] public HingeJoint _joint;
 
     [SerializeField] public int ShellCount = 50;
-
-    [SerializeField] private TankNetworkRoomPlayer tankPlayer;
-    [SerializeField] private TankNetworkRoomManager Room;
-    [SerializeField] private TextMeshPro tankTextNameAndHp;
-    [SerializeField] private TankNetworkRoomManager tankNetworkRoomManager;
-    [SerializeField] public HingeJoint joint;
-
     [SerializeField] public readonly int MAXHP = 10;
-    [SerializeField] public bool isDead=false;
+    public bool IsDead = false;
 
     [SyncVar(hook = nameof(HandleNicknameChanged))]
-    public string nickname = "Loading...";
+    public string Nickname = "Loading...";
     [SyncVar(hook = nameof(HandleHPChanged))]
-    public int hp = 0;
+    public int HP = 0;
     [SyncVar]
     public int Team;
 
-    [SerializeField] private TeamManager teamManager;
+
 
     public override void OnStartAuthority()
     {
-
-        
-        Room = FindObjectOfType<TankNetworkRoomManager>();
-        tankPlayer = Room.tankRoomPlayers.Find(x => x.isLocalPlayer == true);
-
-        //CmdAddPlayrToTeam();
-        
+        _room = FindObjectOfType<TankNetworkRoomManager>();
+        _tankPlayer = _room.tankRoomPlayers.Find(x => x.isLocalPlayer == true);
     }
-    
+
     public void Damage()
     {
         CmdDamage();
@@ -44,13 +37,13 @@ public class TankStats : NetworkBehaviour
     [Command]
     public void CmdAddPlayrToTeam()
     {
-        teamManager.AddTankToTeam(Team);
+        _teamManager.AddTankToTeam(Team);
     }
     [Command]
     public void CmdDamage()
     {
         Console.WriteLine("Damage");
-        hp--;
+        HP--;
     }
     public void Death()
     {
@@ -59,42 +52,22 @@ public class TankStats : NetworkBehaviour
     [Command]
     public void CmdDeath()
     {
-        teamManager = FindObjectOfType<TeamManager>();
-        teamManager.RemoveTankFromTeam(Team);
-        
+        _teamManager = FindObjectOfType<TeamManager>();
+        _teamManager.RemoveTankFromTeam(Team);
+
         RpcDeath();
-        //if (Team == 0)
-        //{
-        //    Room.CountOfDeathPlayer++;
-        //    Room.lastBluePos--;
-        //}
-        //if (Team == 1)
-        //{
-        //    Room.CountOfDeathPlayer++;
-        //    Room.lastYellowPos--;
-        //}
-        //if (Team == 2)
-        //{
-        //    Room.CountOfDeathPlayer++;
-        //    Room.lastGreenPos--;
-        //}
-        //if (Team == 3)
-        //{
-        //    Room.CountOfDeathPlayer++;
-        //    Room.lastBrownPos--;
-        //}
     }
 
     [ClientRpc]
     private void RpcDeath()
     {
-        isDead = true;
+        IsDead = true;
     }
 
     public void UpdateTankNameAndHp()
     {
         Debug.Log("UpdateName");
-        tankTextNameAndHp.text = nickname + "\tHP:" + hp;
+        _tankTextNameAndHp.text = Nickname + "\tHP:" + HP;
     }
 
     public void DecreaseShellCount()
