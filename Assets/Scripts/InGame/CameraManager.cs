@@ -4,26 +4,25 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     public List<GameObject> cameraObjs = new List<GameObject>();
-    public GameObject currentCamera;
+    public GameObject CurrentCamera;
 
     public void SwitchCamera()
     {
         Debug.Log("SwitchCamera");
-        currentCamera.SetActive(false);
-        int cameraIndex = cameraObjs.FindIndex(x => x == currentCamera);
+        CurrentCamera.SetActive(false);
+        int cameraIndex = cameraObjs.FindIndex(x => x == CurrentCamera);
         Debug.Log(cameraIndex);
         if (cameraIndex != cameraObjs.Count - 1)
         {
             Debug.Log("SwitchCameraCondition1");
-            currentCamera = cameraObjs[cameraIndex++];
-            currentCamera.SetActive(true);
-
+            CurrentCamera = cameraObjs[cameraIndex++];
+            CurrentCamera.SetActive(true);
         }
         else
         {
-            Debug.Log("SwitchCameraCondition1");
-            currentCamera = cameraObjs[0];
-            currentCamera.SetActive(true);
+            Debug.Log("SwitchCameraCondition2");
+            CurrentCamera = cameraObjs[0];
+            CurrentCamera.SetActive(true);
         }
     }
 }

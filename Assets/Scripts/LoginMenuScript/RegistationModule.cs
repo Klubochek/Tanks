@@ -3,15 +3,15 @@ using PlayFab.ClientModels;
 using TMPro;
 using UnityEngine;
 
-public class RegistationModule : MonoBehaviour
+public class RegistationModule 
 {
     private TextMeshProUGUI _regStatusText;
 
 
-    public void RegisterNewUser(string username, string email, string password, string spassword,TextMeshProUGUI regStatus)
+    public void RegisterNewUser(RegistrationParams regParams,TextMeshProUGUI regStatus)
     {
         _regStatusText = regStatus;
-        if (password != spassword) 
+        if ( regParams.Password!= regParams.ConfrimPassword) 
         {
             _regStatusText.text="Passwords do not match ";
             _regStatusText.color = Color.red;
@@ -21,10 +21,10 @@ public class RegistationModule : MonoBehaviour
         {
             var request = new RegisterPlayFabUserRequest
             {
-                Email = email,
-                Username = username,
-                Password = password,
-                DisplayName = username
+                Email = regParams.Email,
+                Username = regParams.Username,
+                Password = regParams.Password,
+                DisplayName = regParams.Username
             };
             PlayFabClientAPI.RegisterPlayFabUser(request, ShowRegResult, ShowRegError);
             

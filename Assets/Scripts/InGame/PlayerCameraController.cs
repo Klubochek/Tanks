@@ -44,10 +44,14 @@ namespace Tanks.Input
         {
             _cameraManager = FindObjectOfType<CameraManager>();
             _cameraManager.cameraObjs.Add(_virtualCamera.gameObject);
+            if (isOwned)
+            {
+                _cameraManager.CurrentCamera = _virtualCamera.gameObject;
+            }
         }
         public override void OnStartAuthority()
         {
-            _cameraManager = FindObjectOfType<CameraManager>();
+            
             _aimBg = GameObject.FindGameObjectWithTag("Aimbg");
             _aimBg.SetActive(false);
             _transposer = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
@@ -64,9 +68,13 @@ namespace Tanks.Input
             TankControls.Player.SwitchCamera.performed += ctx => SwitchCamera();
 
 
-            _cameraManager.currentCamera = _virtualCamera.gameObject;
+            
         }
-
+        public override void OnStopClient()
+        {
+            base.OnStopClient();
+            _cameraManager.cameraObjs.Remove(_virtualCamera.gameObject);
+        }
         private void SwitchCamera()
         {
             if (_tankStats.IsDead)
@@ -110,5 +118,6 @@ namespace Tanks.Input
                 _towerController.RotateWeapon(new Vector3(vector2.y, 0, 0));
             }
         }
+        
     }
 }

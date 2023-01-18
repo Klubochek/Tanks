@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoginModule : MonoBehaviour
+public class LoginModule
 {
     public LoginModule(PlayerData playerData)
     {

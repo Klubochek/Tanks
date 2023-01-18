@@ -13,26 +13,21 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
         {1,Color.yellow },
         {2,Color.green },
         {3,new Color32(102,51,0,255)}
-
     };
-
-
-
 
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
     public string PlayerName = "Loading...";
     [SyncVar(hook = nameof(HandleReadyStatusChanged))]
     public bool IsReady = false;
-
-    public bool IsLeader = false;
     [SyncVar(hook = nameof(HandleTeamChanged))]
     public int Team = 0;
 
-
+    public bool IsLeader = false;
 
     [SerializeField] private PlayerData playerData;
     [SerializeField] private GameObject content;
-    [SerializeField] private int maxTeamCount = 4;
+
+    private const int MaxTeamCount = 4;
 
     private TankNetworkRoomManager _room;
     private TankNetworkRoomManager Room
@@ -52,13 +47,12 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     public override void OnStartClient()
     {
         Room.tankRoomPlayers.Add(this);
-        
         UpdateDisplay();
     }
     public override void OnStopClient()
     {
         Room.tankRoomPlayers.Remove(this);
-        
+
         UpdateDisplay();
     }
     public override void OnStopAuthority()
@@ -67,15 +61,11 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
         CmdRemoveTankPlayer();
     }
     #endregion
+
     public void StartGame()
     {
         if (IsLeader)
             CmdStartGame();
-    }
-
-    public void Disconnect()
-    {
-        CmdDisconnect();
     }
 
     private void UpdateDisplay()
@@ -90,7 +80,6 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
                     break;
                 }
             }
-
             return;
         }
         content = GameObject.FindGameObjectWithTag("Content");
@@ -98,7 +87,6 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
         {
             for (int i = 0; i < Room.maxConnections; i++)
             {
-
                 content.transform.GetChild(i).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Empty";
                 content.transform.GetChild(i).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = string.Empty;
                 content.transform.GetChild(i).GetComponent<Image>().color = TeamColor[0];
@@ -113,7 +101,6 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
                 content.transform.GetChild(i).GetComponent<Image>().color = TeamColor[Room.tankRoomPlayers[i].Team];
             }
         }
-
     }
     public void SetupInGameUI()
     {
@@ -138,7 +125,7 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     [Command]
     public void CmdSetTeam()
     {
-        if (Team == maxTeamCount - 1) Team = 0;
+        if (Team == MaxTeamCount - 1) Team = 0;
         else Team++;
         UpdateDisplay();
 
@@ -147,12 +134,6 @@ public class TankNetworkRoomPlayer : NetworkRoomPlayer
     private void CmdSetDisplayName(string playerName)
     {
         PlayerName = playerName;
-    }
-    [Command]
-    public void CmdDisconnect()
-    {
-        Debug.Log("Disconnectiong");
-        connectionToClient.Disconnect();
     }
     [Command]
     public void CmdStartGame()

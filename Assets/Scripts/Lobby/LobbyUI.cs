@@ -1,6 +1,5 @@
 using Mirror;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LobbyUI : MonoBehaviour
 {
@@ -15,7 +14,6 @@ public class LobbyUI : MonoBehaviour
             if (_tankNetworkRoomPlayer.IsLeader)
             {
                 _startGameButton.SetActive(true);
-                ;
             }
         }
     }
@@ -61,8 +59,6 @@ public class LobbyUI : MonoBehaviour
     public void OnChangeTeamButtonClick()
     {
         Room.tankRoomPlayers.Find(x => x.isLocalPlayer == true).CmdSetTeam();
-        
-
     }
     public void OnDisconnectButtonClick()
     {
@@ -78,7 +74,7 @@ public class LobbyUI : MonoBehaviour
                 else
                 {
                     Debug.Log("Disconnect");
-                    player.CmdDisconnect();
+                    Room.StopClient();
                     break;
                 }
             }

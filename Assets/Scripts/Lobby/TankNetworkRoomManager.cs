@@ -9,17 +9,11 @@ public class TankNetworkRoomManager : NetworkRoomManager
     public List<GameObject> CurrentPlayerTanks = new List<GameObject>();
     [SerializeField] private List<GameObject> _tankPrefabs;
     [SerializeField] private GameObject _content;
-
-
     [SerializeField] private TeamManager _teamManager;
-
-
-
 
     private MongoModule _mongoModule;
 
     #region ServerCallbacks
-
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -27,26 +21,16 @@ public class TankNetworkRoomManager : NetworkRoomManager
     }
     public override void OnStopServer()
     {
-        _mongoModule.DeleteServerData();
         base.OnStopServer();
-        
+        _mongoModule.DeleteServerData();
     }
-
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
     {
-
         var tankPlayer = tankRoomPlayers.Find(x => x.connectionToClient == conn);
 
-        if (tankPlayer == null) System.Console.WriteLine(tankPlayer);
-
-
-
         var tankStats = gamePlayer.GetComponent<TankStats>();
-
         tankStats.HP = tankStats.MAXHP;
-
         tankStats.Nickname = tankPlayer.PlayerName;
-
         tankStats.Team = tankPlayer.Team;
 
 
@@ -63,55 +47,35 @@ public class TankNetworkRoomManager : NetworkRoomManager
     }
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-
-
         base.OnServerAddPlayer(conn);
 
         if (tankRoomPlayers.Count == 0)
             conn.identity.GetComponent<TankNetworkRoomPlayer>().IsLeader = true;
-
-
     }
 
     public Transform ChooseStartPosition(int team)
     {
+        if (_teamManager == null) _teamManager = FindObjectOfType<TeamManager>();
+
         var teamPlayersCount = _teamManager.CurrentTeams;
-        if (team == 0)
-        {
-            var position = startPositions[team * 5 + teamPlayersCount[team]];
-            return position;
-        }
-        if (team == 1)
-        {
-            var position = startPositions[team * 5 + teamPlayersCount[team]];
-            return position;
-        }
-        if (team == 2)
-        {
-            var position = startPositions[team * 5 + teamPlayersCount[team]];
-            
-            return position;
-        }
-        if (team == 3)
-        {
-            var position = startPositions[team * 5 + teamPlayersCount[team]];
-            return position;
-        }
-        return null;
+        var position = startPositions[team * 5 + teamPlayersCount[team]];
+        return position;
+
     }
 
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
-        if (_teamManager == null) _teamManager = FindObjectOfType<TeamManager>();
         var team = roomPlayer.GetComponent<TankNetworkRoomPlayer>().Team;
-        Transform startPos = ChooseStartPosition(team);
         Debug.Log("Team:" + team);
+
+
+        Transform startPos = ChooseStartPosition(team);
         playerPrefab = spawnPrefabs[team];
-
         GameObject TankPlayer = Instantiate(playerPrefab, startPos.position, startPos.rotation);
-        CurrentPlayerTanks.Add(TankPlayer);
 
-        
+
+
+        CurrentPlayerTanks.Add(TankPlayer);
         _teamManager.AddTankToTeam(team);
         return TankPlayer;
     }
@@ -123,7 +87,13 @@ public class TankNetworkRoomManager : NetworkRoomManager
             roomPlayer.SetupInGameUI();
         }
     }
-    #endregion
+    public override void OnServerDisconnect(NetworkConnectionToClient conn)
+    {
+        if (IsSceneActive(GameplayScene)) _teamManager.RemoveTankFromTeam(conn.identity.gameObject.GetComponent<TankStats>().Team);
+
+        base.OnServerDisconnect(conn);
+    }
+#endregion
     public void StartGame()
     {
         foreach (var player in tankRoomPlayers)
@@ -131,8 +101,7 @@ public class TankNetworkRoomManager : NetworkRoomManager
             player.IsReady = true;
             player.readyToBegin = true;
         }
+
         OnRoomServerPlayersReady();
-
     }
-
 }

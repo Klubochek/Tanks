@@ -42,7 +42,7 @@ public class LoginMenuUI : MonoBehaviour
     }
     public void OnSignUpButtonClick()
     {
-        _registationModule.RegisterNewUser(_regNickField.text, _regEmailField.text, _regPass.text, _regConfirmPass.text,_regStatusText);
+        _registationModule.RegisterNewUser(new RegistrationParams( _regEmailField.text,_regNickField.text, _regPass.text, _regConfirmPass.text),_regStatusText);
     }
     public void OnBackButtonClick()
     {

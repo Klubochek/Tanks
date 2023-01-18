@@ -51,7 +51,7 @@ public class InGameUI : MonoBehaviour
                     _room.StopHost();
                     break;
                 }
-                player.CmdDisconnect();
+                _room.StopClient();
                 break;
             }
         }
@@ -72,12 +72,12 @@ public class InGameUI : MonoBehaviour
     public void ShowWinner(int team)
     {
         if (team == 0)
-            _endGameText.text = "Победила голубая команда";
+            _endGameText.text = $"<color=blue>Победила голубая команда</color>";
         if (team == 1)
-            _endGameText.text = "Победила желтая команда";
+            _endGameText.text = $"<color=yellow>Победила желтая команда</color>";
         if (team == 2)
-            _endGameText.text = "Победила зеленая команда";
+            _endGameText.text = $"<color=green>Победила зеленая команда</color>";
         if (team == 3)
-            _endGameText.text = "Победила коричневая команда";
+            _endGameText.text = $"<color=brown>Победила коричневая команда</color>";
     }
 }

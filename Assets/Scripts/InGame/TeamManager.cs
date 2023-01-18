@@ -48,7 +48,7 @@ public class TeamManager : NetworkBehaviour
     private IEnumerator StopServer()
     {
         yield return new WaitForSeconds(5);
-        var roomManager=FindObjectOfType<TankNetworkRoomManager>();
-        roomManager.ServerChangeScene(roomManager.RoomScene);
+        //TankNetworkRoomManager.singleton.ServerChangeScene(TankNetworkRoomManager.singleton.onlineScene);
+        NetworkServer.DisconnectAll();
     }
 }

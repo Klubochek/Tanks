@@ -1,9 +1,4 @@
-using Realms;
-using Realms.Sync;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -14,19 +9,19 @@ public class MainMenuButton : MonoBehaviour
     [SerializeField] private TMP_InputField _ip;
     [SerializeField] private TextMeshProUGUI _currentUserName;
     [SerializeField] private PlayerData _playerData;
-    
 
-    
+
+
     [SerializeField] private ServersModule _serversModule;
     private MongoModule _mongoModule;
-    
+
     private void Start()
     {
         _mongoModule = new MongoModule();
         Cursor.visible = true;
         _currentUserName.text = "Current User:" + "\n" + _playerData.PlayerName;
     }
-    
+
     public void OnJoinButtonClick()
     {
         StartCoroutine(Join());
@@ -34,11 +29,11 @@ public class MainMenuButton : MonoBehaviour
     public IEnumerator Join()
     {
         _connectionMenu.SetActive(true);
-        var allServers=_mongoModule.LoadServers();
+        var allServers = _mongoModule.LoadServers();
         yield return new WaitUntil(() => allServers != null);
-        _serversModule.CreateNewServerList(allServers);   
+        _serversModule.CreateNewServerList(allServers);
     }
-    
+
     public void OnConnectionWithOwnIpClick()
     {
         _connector.Join(_ip.text);

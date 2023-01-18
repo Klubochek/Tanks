@@ -1,9 +1,9 @@
+using MongoDB.Bson;
 using Realms;
 using Realms.Sync;
 using System;
 using System.Linq;
 using System.Net;
-using MongoDB.Bson;
 
 public class MongoModule
 {
@@ -33,7 +33,7 @@ public class MongoModule
                 realm.Subscriptions.Add(myItems);
             }
         };
-       
+
         _realm = await Realm.GetInstanceAsync(config);
 
 
@@ -52,12 +52,12 @@ public class MongoModule
     {
         string externalIpString = new WebClient().DownloadString("http://icanhazip.com").Replace("\\r\\n", "").Replace("\\n", "").Trim();
         var externalIp = IPAddress.Parse(externalIpString);
-        
+
 
         Random random = new Random();
 
         _NewServerName = $"Server{random.Next(0, 10)}";
-        _tankServer = new TankServer { IP = externalIp.ToString(), ServerName = _NewServerName,Id=new ObjectId(_user.Id) };
+        _tankServer = new TankServer { IP = externalIp.ToString(), ServerName = _NewServerName, Id = new ObjectId(_user.Id) };
         _realm.Write(() => _realm.Add(_tankServer));
         Console.WriteLine("Current ip:" + _tankServer.IP);
         Console.WriteLine("Current ServerName:" + _tankServer.ServerName);
@@ -67,7 +67,6 @@ public class MongoModule
     {
         _realm.Write(() => _realm.Remove(_tankServer));
         Console.WriteLine("server was deleted");
-
     }
     #endregion
 }
